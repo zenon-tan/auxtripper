@@ -1,0 +1,133 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    z-index: 10;
+}
+
+.bg {
+    z-index: 0;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
+
+.bg iframe {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.bg iframe > * {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.front .text {
+
+    padding-bottom: 30px;
+    width: 60%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: 1DB954;
+}
+
+.front {
+    color: #1DB954;
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+    align-items: center;
+    justify-content: center;
+}
+
+.front .title {
+    font-size: 500%;
+    padding-bottom: 10px;
+}
+
+
+
+.userInstruction {
+
+    color: orange;
+    font-size: large;
+    padding-bottom: 30px;
+
+}
+
+.search-bar {
+    top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar .text {
+    font-size: small;
+}
+
+.search {
+    background-color: white;
+    height: fit-content;
+    padding-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 10000px;
+}
+
+.transit-options {
+    background-color: transparent;
+    border: none;
+}
+
+
+.transit-options mat-button-toggle {
+    background-color: transparent;
+    border: none;
+}
+
+mat-button-toggle:hover {
+    background-image: radial-gradient(circle 20px, orange, transparent) !important;
+    border-radius: 100px !important;
+}
+
+.mat-button-toggle-checked mat-icon {
+    color: orange !important;
+}
+
+.mat-button-toggle-input {
+    background-color: none !important;
+    padding-left: 32px !important;
+}
+
+
+.transit-options mat-icon {
+    color: darkgray;
+}
+
+mat-form-field input {
+    border: 0 !important;
+    border-color: transparent !important;
+    background-color: transparent;
+}
+
+.submit-button-valid {
+    color: orange;
+}

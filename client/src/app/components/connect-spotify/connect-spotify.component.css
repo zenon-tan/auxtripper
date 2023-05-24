@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.connect {
+    top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    height: 40%;
+}
+
+.connect button {
+    background-color: #1DB954;
+    border: none;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    border-radius: 10000px;
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+    font-weight: normal;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+
+    cursor: pointer;
+}
+
+button:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px orange;
+  }
+
+.connect p {
+    color: white
+}
+
+.connect img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}

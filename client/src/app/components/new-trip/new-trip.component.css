@@ -1,0 +1,472 @@
+.container {
+    /* padding-top: 50px; */
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar-container {
+    z-index: 9;
+    padding-top: 20px;
+    width: 35%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
+}
+
+
+.map-container {
+    width: 65%;
+    height: 100%;
+}
+
+.map-container .map {
+    position: relative;
+    /* top: 50px; */
+    width: 100%;
+    height: 100%;
+}
+
+.search-bar {
+    padding-top: 50px;
+    width: 100%;
+    height: 30%;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    /* background-color: red; */
+}
+
+.options-panel {
+    padding-top: 20px;
+    padding-left: 30px;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* background-color: green; */
+}
+
+.options-panel .no-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: grey;
+    font-size: small;
+    padding: 120px 120px 70px 100px;
+    text-align: center;
+}
+
+
+.options .option {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 50px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    /* background-color: pink; */
+}
+
+
+.option .time {
+    width: 50%;
+}
+
+
+.option .time .detail {
+    padding-top: 10%;
+    color: rgb(212, 155, 32);
+    cursor: pointer;
+}
+
+.detail button {
+    color: white;
+    background-color: #1DB954;
+    border: #1DB954 solid 1px;
+    padding: 10px 20px;
+    border-radius: 1000px;
+    cursor: pointer;
+}
+
+.option .duration {
+    padding-left: 15%;
+    width: 25%;
+    right: 0;
+    /* background-color: red; */
+}
+
+.options .icon {
+    /* padding-bottom: 10%; */
+    padding-left: 30px;
+    padding-right: 10%;
+}
+
+.options .option-selected {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar .selection {
+    padding-left: 10vh;
+    padding-top: 5vh;
+    /* background-color: aqua; */
+}
+
+.search-bar .button {
+    padding-left: 7vh;
+}
+
+.search-bar .search {
+    padding-left: 30px;
+    padding-right: 5%;
+    padding-top: 10px;
+}
+
+.search-bar .search mat-form-field {
+    width: 100%;
+    padding-right: 20px;
+}
+
+.search .travel-mode {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    padding-right: 60px;
+    padding-bottom: 30px;
+    /* background-color: green; */
+}
+
+.search mat-icon {
+    color: white;
+}
+
+.travel-mode .button-clicked {
+    justify-content: center;
+    display: inline-block;
+    cursor: default;
+}
+
+.travel-mode .button-clicked mat-icon {
+    color: rgb(212, 155, 32);
+}
+
+.travel-mode .button-clicked:hover {
+    background-image: none;
+}
+
+.travel-mode button {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+
+.travel-mode button:hover {
+    background-image: radial-gradient(circle 20px, orange, rgb(48, 48, 48));
+}
+
+.travel-mode button mat-icon {
+    color: white;
+}
+
+.sidebar-container .search-bar .text {
+    font-size: small;
+    color: white;
+}
+
+mat-label {
+    color: white;
+    font-size: small;
+}
+
+mat-form-field-outline {
+    color: white !important;
+    /* background-color: red; */
+}
+
+.search-bar .transit-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+}
+
+
+.transit-options {
+    gap: 20px;
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    /* background-color: red; */
+}
+
+.transit-options .dropdown {
+    font-size: small;
+    color: white;
+    /* background-color: red; */
+    width: 50%;
+    /* width: 130px; */
+}
+
+.dropdown mat-form-field {
+    width: 70%;
+}
+
+.when {
+    color: white;
+    /* background-color: red; */
+}
+
+
+.transit-options {
+    font-size: small;
+    text-align: center;
+    color: white;
+    display: flex;
+    left: 30px;
+    justify-content: space-between;
+
+
+}
+
+.datepicker {
+    width: 70%;
+}
+
+.datepicker input {
+    color: white;
+}
+
+.datepicker mat-datepicker-toggle {
+    color: white;
+}
+
+.datepicker input {
+    width: 70%;
+}
+
+
+.container .route {
+    width: 35%;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    height: 90%;
+}
+
+.route .back {
+    font-size: smaller;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10px;
+    padding-bottom: 2vh;
+    padding-right: 5vh;
+}
+
+
+.route .back .arrow {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.arrow mat-icon {
+    color: white;
+}
+
+.route .back .text {
+    right: 20%;
+    padding-left: 10%;
+    color: white;
+}
+
+.route .back .text span {
+    color: lightgrey;
+}
+
+.route .header {
+    padding-top: 2vh;
+    padding-bottom: 3vh;
+    padding-left: 30px;
+}
+
+.header .date {
+    font-size: large;
+    color: white;
+    padding-bottom: 5px;
+}
+
+.route .header .time {
+    font-size: x-large;
+    color: white;
+}
+
+.route .header .duration {
+    font-size: x-large;
+    color: lightgrey;
+    padding-bottom: 10%;
+}
+
+
+
+.route .header .generate-button {
+    top: 10%;
+    position: relative;
+    width: 150px;
+    font-size: large;
+    text-align: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.route .header .generate-button:hover {
+    background-color: #1DB954;
+    cursor: pointer;
+}
+
+.route .details {
+    padding-left: 30px;
+    padding-top: 2vh;
+    height: 50%;
+    overflow-y: scroll;
+    padding-bottom: 5%;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.details .location {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.route .origin {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: row;
+    right: 30px;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    inset: (-5px, -1px, -1px, -1px);
+    border-bottom: 0.5px solid rgb(94, 94, 94);
+    gap: 35px;
+}
+
+
+
+.origin .place {
+    padding-right: 30px;
+}
+
+.destination {
+    z-index: 9;
+    padding-left: 30px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    padding-bottom: 20px;
+    gap: 35px;
+    border-top: 0.5px solid rgb(94, 94, 94);
+}
+
+
+
+.destination .place {
+    width: 60%;
+}
+
+.location {
+    /* background-color: orangered; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 0.5px rgb(61, 61, 61) solid;
+    justify-content: center;
+    width: 90%;
+}
+
+
+
+.location .place {
+    padding-left: 35px;
+}
+
+
+.container .instruction {
+    padding-left: 30px;
+    /* background-color: pink; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    align-items: center;
+    height: 100%;
+}
+
+.instruction .icon {
+    padding-left: 30px;
+    padding: 2%;
+}
+
+.instruction .text {
+    width: 40%;
+    padding-left: 15%;
+}
+
+.instruction .distance {
+    padding-left: 10%;
+}
+
+.driving {
+    display: flex;
+    flex-direction: row;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    align-items: center;
+    width: 90%;
+    border-bottom: 0.5px rgb(61, 61, 61) solid;
+}
+
+.driving .text {
+    width: 40%;
+    padding-left: 15%;
+
+}
+
+.driving .distance {
+    padding-left: 10%;
+}

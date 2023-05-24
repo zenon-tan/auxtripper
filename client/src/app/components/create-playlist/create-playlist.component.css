@@ -1,0 +1,91 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    gap: 40px;
+}
+
+.header {
+    color: white;
+    font-size: xx-large;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.text {
+    color: white;
+    width: 300px;
+}
+
+.save {
+    background-color: transparent;
+    border: white 1px solid;
+    border-radius: 1000px;
+    padding: 10px 30px;
+    display: flex;
+
+}
+
+.save button {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    font-size: large;
+}
+
+.save:hover {
+    background-color: orange;
+    border: orange 1px solid;
+    cursor: pointer;
+}
+
+.skip {
+    background-color: transparent;
+    border: white 1px solid;
+    border-radius: 1000px;
+    padding: 10px 30px;
+    width: 100px;
+
+}
+
+.skip:hover {
+    background-color: #1DB954;
+    border: #1DB954 1px solid;
+    cursor: pointer;
+}
+
+.skip button {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    font-size: large;
+}
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    /* background-color: red; */
+}
+
+.skip-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.skip-layout img {
+    height: 50%;
+    width: 40%;
+    object-fit: contain;
+}

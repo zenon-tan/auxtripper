@@ -1,0 +1,92 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="processForm()">
+        <div class="container">
+            <div class="top-container">
+                <div class="selected">
+                    <div class="greetings" *ngIf="spotifyUser != undefined">
+                        <div>Hello, <span>{{spotifyUser.displayName}}!</span></div>
+                        <div>Based on your listening history, please select your favorite artists and genres:</div>
+                    </div>
+                </div>
+                <div class="generate">
+                    <button type="submit" [disabled]="selectedArtists.length == 0 || selectedGenres.length == 0">
+                        <div class="button-content">
+                            <mat-icon>fast_forward</mat-icon>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="artists">
+                <div class="selected-artists">
+                    <div class="selected-a" *ngFor="let s of selectedArtists; let idx = index">
+                        <div> {{s | titlecase}}</div>
+                    </div>
+                </div>
+                <div class="artists-search">
+                    <div class="subtitle">
+                        <h2>{{selectedArtists.length}}/5 Artists Selected:</h2>
+                        <i>Select up to 5</i>
+                    </div>
+                    <div class="search-bar">
+                        <mat-chip-listbox class="toggle" aria-label="Time range" [value]="selectedTimeRange"
+                            >
+                            <mat-chip-option *ngFor="let t of SPOTIFY_TIME_RANGE; let idx = index" (click)="getTimeRange(t.value)"  value="{{t.value}}">
+                                {{t.name | titlecase}}</mat-chip-option>
+                        </mat-chip-listbox>
+                        <div class="artist-input">
+                            <input type="text" matInput [formControl]="myArtist" [matAutocomplete]="auto"
+                                placeholder="Search for Artist..." [(ngModel)]="searchedArtist">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchArtist($event)">
+                                <mat-option *ngFor="let artist of filteredArtistSeeds | async"
+                                    [value]="artist | titlecase">
+                                    {{artist | titlecase}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+                </div>
+                <mat-button-toggle-group name="artists" aria-label="artists" multiple [value]="_selectedArtistsDisplay"
+                    class="selection" (valueChange)="getArtists($event)" formControlName="artists"
+                    (change)="toggleArtist($event)">
+                    <mat-button-toggle class="option" *ngFor="let a of customArtists" [value]="a.name">
+                        <img src="{{a.images[2].url}}" alt="">
+                        {{a.name}}</mat-button-toggle>
+                    <mat-button-toggle class="option" *ngFor="let a of artists$ | async" [value]="a.name">
+                        <img src="{{a.images[2].url}}" alt="">
+                        {{a.name}}</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+            <div class="genres">
+                <div class="selected-genres">
+                    <div class="selected-g" *ngFor="let s of selectedGenres; let idx = index">
+                        <div> {{s | titlecase}}</div>
+                    </div>
+                </div>
+                <div class="genre-search">
+                    <div class="subtitle">
+                        <h2>{{selectedGenres.length}}/5 Genres Selected:</h2>
+                        <i>Select up to 5</i>
+                    </div>
+                    <div class="genre-input">
+                        <input type="text" matInput [formControl]="myGenre" [matAutocomplete]="autoTest"
+                            placeholder="Search for Genres..." [(ngModel)]="searchedGenre">
+                        <mat-autocomplete #autoTest="matAutocomplete" (optionSelected)="searchGenres($event)">
+                            <mat-option *ngFor="let genre of filteredGenreSeeds | async" [value]="genre | titlecase">
+                                {{genre | titlecase}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                </div>
+                <mat-button-toggle-group name="genres" aria-label="genres" multiple class="selection"
+                    [value]="_selectedGenresDisplay" (valueChange)="getGenres($event)" (change)="toggleGenre($event)">
+                    <mat-button-toggle class="option" *ngFor="let g of customGenres | slice:0:10" [value]="g">
+                        {{g | titlecase}}</mat-button-toggle>
+                    <mat-button-toggle class="option" *ngFor="let g of topGenres | slice:0:10" [value]="g">
+                        {{g | titlecase}}</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+    </form>
+</div>

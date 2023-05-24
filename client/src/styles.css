@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.search-bar {}
+
+/* https://softauthor.com/google-places-autocomplete-api/ */
+.pac-icon {
+    display: none;
+}
+
+.pac-item {
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.pac-item:hover {
+    background-color: #ececec;
+}
+
+.pac-item-query {
+    font-size: 12px;
+}
+
+.pac-container {
+    z-index: 9999999;
+    top: 50px;
+}
+
+::ng-deep .mat-form-field-outline-start {
+    border-radius: 28px 0 0 28px !important;
+    min-width: 28px !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+    border-radius: 0 28px 28px 0 !important;
+}

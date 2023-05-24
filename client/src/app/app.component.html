@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="navbar">
+    <div class="left">
+      <button mat-icon-button class="home" (click)="goToHome()">
+        <mat-icon>home</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+      <button mat-icon-button class="menu-bar" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="panel">
+        <button mat-menu-item (click)="login()">
+          <!-- <mat-icon>dialpad</mat-icon> -->
+          <span>Log In</span>
+        </button>
+      </mat-menu>
+    </div>
+    
+    <div *ngIf="isLoggedIn">
+      <button mat-icon-button class="menu-bar" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="panel">
+        <button mat-menu-item disabled>
+          <div>{{username}}</div>
+        </button>
+        <button mat-menu-item (click)="newTrip()">
+          <!-- <mat-icon>dialpad</mat-icon> -->
+          <span>New Trip</span>
+        </button>
+        <button mat-menu-item (click)="viewDashboard()">
+          <!-- <mat-icon>dialpad</mat-icon> -->
+          <span>Itineraries</span>
+        </button>
+        <button mat-menu-item (click)="viewSpotify()">
+          <!-- <mat-icon>dialpad</mat-icon> -->
+          <span>View your Spotify</span>
+        </button>
+        <button mat-menu-item disabled>
+          <!-- <mat-icon>voicemail</mat-icon> -->
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <div class="app-outlet">
+    <router-outlet></router-outlet>
+  </div>
+</div>

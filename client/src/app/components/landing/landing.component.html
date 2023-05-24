@@ -1,0 +1,58 @@
+<div class="bg">
+    <!-- https://player.vimeo.com/video/440055496 -->
+    <iframe [src]="videoIds[videoIdx] | safe"
+        frameborder="0" allow="autoplay; fullscreen; picture-in-picture"
+        webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<div class="container">
+    <div *ngIf="!next" class="front">
+
+        <div class="title" @fadeTitle>AuxTripper</div>
+        <div class="text" @fadeSubtitle>
+            <div>AuxTripper generates a Spotify playlist based on your trip and listening preferences</div>
+        </div>
+
+    </div>
+    <div>
+        <form [formGroup]="form" (ngSubmit)="processForm()">
+
+            <div @fadeInstr class="userInstruction">First, enter your trip details</div>
+
+            <div class="search-bar" @fadeBar>
+
+                <mat-button-toggle-group class="transit-options" [value]="travelModes[0].name">
+                    <mat-button-toggle value={{t.name}} *ngFor="let t of travelModes; let idx = index"
+                        (click)="getTravelMode(t.name)">
+                        <mat-icon>{{t.icon}}</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <div class="search">
+                    <mat-form-field class="example-full-width" appearance="outline" [style.height.px]=70
+                        [style.width.px]=200>
+                        <input matInput class="text" [min]="today" [matDatepicker]="picker" [value]="today"
+                            formControlName="date">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <input placeholder="From*" class="text" ngx-google-places-autocomplete matInput
+                            formControlName="origin" (onAddressChange)="getOrigin($event)" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <input class="text" placeholder="To*" ngx-google-places-autocomplete matInput
+                            formControlName="destination" (onAddressChange)="getDest($event)" />
+                        <button type="submit" [ngClass]="form.invalid ? '': 'submit-button-valid'"
+                            [disabled]="form.invalid" matSuffix mat-icon-button aria-label="search">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

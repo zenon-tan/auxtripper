@@ -1,0 +1,119 @@
+<div class="container">
+
+   <div class="sidebar-container">
+    <div *ngIf="hasResults" class="route">
+        <div class="back">
+            <div class="text">
+                <div><span>from </span>{{direction.directionRequest.origin.address}}</div>
+                <div><span>to </span> {{direction.directionRequest.destination.address}}</div>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="date">
+                {{travelDate}}
+            </div>
+            <div *ngIf="direction.directionRequest.travelMode == 'TRANSIT'">
+                <div class="time"> {{routes[direction.chosenRoute].legs[0].departure_time.text}} -
+                    {{routes[direction.chosenRoute].legs[0].arrival_time.text}}
+                </div>
+                <div class="duration">({{routes[direction.chosenRoute].legs[0].duration.text}})</div>
+            </div>
+
+            <div *ngIf="direction.directionRequest.travelMode != 'TRANSIT'">
+                <div class="time">
+                    <b>via {{routes[direction.chosenRoute].summary}}</b>
+                </div>
+                <div class="duration">
+                    {{routes[direction.chosenRoute].legs[0].distance.text}}
+                </div>
+            </div>
+        </div>
+
+        <div class="origin">
+            <div class="time" *ngIf="direction.directionRequest.travelMode == 'TRANSIT'">
+                {{routes[direction.chosenRoute].legs[0].departure_time.text}} </div>
+            <div class="place">{{direction.directionRequest.origin.address}}</div>
+        </div>
+
+        <div *ngIf="direction.directionRequest.travelMode == 'TRANSIT'" class="details">
+            <div *ngIf="(routeLength$ | async) as routeLength">
+                <div *ngFor="let i of routes[direction.chosenRoute].legs[0].steps; let idx = index; let isLast = last">
+
+                    <div *ngIf="removedRoute == null && removedRoute != idx">
+                        <div class="location" *ngIf="i.travel_mode == 'TRANSIT'">
+                            <div class="time">{{i.transit.departure_time.text}}</div>
+                            <div class="place">{{i.transit.departure_stop}}</div>
+                        </div>
+
+                        <div class="instruction">
+                            <div class="icon">
+                                <img src="./assets/images/google-maps/directions/{{i.travel_mode | lowercase}}.png">
+                            </div>
+                            <div *ngIf="i.travel_mode == 'TRANSIT'" class="text">
+                                <div>
+                                    <span>
+                                        <b style="color: white; padding-left: 2px; padding-right: 2px;"
+                                            [ngStyle]="{'background-color': i.transit.line.color}">{{i.transit.line.name}}</b>
+
+                                        {{i.instructions}}
+
+                                    </span>
+                                    <div>{{i.duration.text}} ({{i.transit.num_stops}} stops)</div>
+                                </div>
+                            </div>
+                            <div *ngIf="i.travel_mode == 'WALKING'" class="text">
+                                <div>Walk</div>
+                                <div>About {{i.duration.text}}, {{i.distance.text}}</div>
+                            </div>
+                        </div>
+                        <div *ngIf="i.travel_mode == 'TRANSIT'" class="location">
+                            <div class="time">{{i.transit.arrival_time.text}}</div>
+                            <div class="place">{{i.transit.arrival_stop}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="removedRoute == idx">
+                        <div class="driving">
+                            <div class="icon">
+                                <mat-icon> directions_walk</mat-icon>
+                            </div>
+                            <div class="text" [innerHTML]="i.instructions"></div>
+                            <div class="distance"><b>{{i.distance.text}}</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="direction.directionRequest.travelMode != 'TRANSIT'" class="details">
+            <div *ngIf="(routeLength$ | async) as routeLength">
+                <div *ngFor="let i of routes[selectedRoute].legs[0].steps; let idx = index; let isLast = last">
+                    <div class="driving">
+                        <div class="icon">
+                            <img src="./assets/images/google-maps/directions/{{i.travel_mode | lowercase}}.png">
+                        </div>
+                        <div class="text" [innerHTML]="i.instructions"></div>
+                        <div class="distance"><b>{{i.distance.text}}</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="destination">
+            <div class="time" *ngIf="direction.directionRequest.travelMode == 'TRANSIT'">
+                {{routes[direction.chosenRoute].legs[0].arrival_time.text}}</div>
+            <div class="place">{{direction.directionRequest.destination.address}}</div>
+        </div>
+    </div>
+   </div>
+
+<div class="sidebar-container">
+    <google-map class="map" width="90vw" height="100vh" [options]="options" [center]="center" [zoom]="zoom">
+        <map-marker *ngIf="marker != null" [position]="center"></map-marker>
+        <map-directions-renderer *ngIf="(directionsResults$ | async) as directionsResults"
+            [options]="directionsRenderOption" [directions]="directionsResults">
+        </map-directions-renderer>
+    </google-map>
+</div>
+
+</div>

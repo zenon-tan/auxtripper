@@ -1,0 +1,168 @@
+<div class="container">
+    <div class="playlist-container">
+
+        <form [formGroup]="form" (ngSubmit)="processForm()">
+            <div class="playlist-header">
+                <div>
+                    <div class="playlist-uploadImg">
+                        <input hidden class="playlist-upload" (change)="onFileSelected($event)" #fileInput type="file"
+                            accept="image/*" formControlName="playlistImage">
+                        <div class="file-upload">
+
+                            <button type="button" class="upload-btn" (click)="fileInput.click()">
+                                <mat-icon *ngIf="img == undefined">cloud_upload</mat-icon>
+                                <img *ngIf="img" src="{{img}}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="playlist-title">
+                    <div class="playlist-name">
+                        <input type="text" placeholder="Enter a playlist name..." formControlName="playlistTitle">
+                    </div>
+                    <div>
+                        <textarea class="playlist-desc" placeholder="Description"
+                            formControlName="playlistDescription"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="buttons">
+            <div *ngIf="hasTracks"><i>{{displayTracks.length + lockedTracks.length}} tracks, {{playlistDuration}}</i></div>
+            <button class="renew" (click)="reloadTracks()">
+                <mat-icon>autorenew</mat-icon>
+            </button>
+            <button class="options" (click)="toggle()">
+                <mat-icon>control_point</mat-icon>
+            </button>
+
+            <button type="button" class="generate" (click)="processForm()">Create</button>
+        </div>
+
+        <div *ngIf="optionsPanel == true" class="options-panel">
+            Public:
+            <mat-slide-toggle (click)="slidePublic()" [value]="isPublic"></mat-slide-toggle>
+            Collaborative:
+            <mat-slide-toggle (click)="slideCollaborative()" [value]="isCollaborative"></mat-slide-toggle>
+
+        </div>
+
+        <div class="spotify-tracks">
+            <div>
+                <div class="spotify-track-locked" *ngFor="let t of lockedTracks; let idx = index">
+                    <div class="track">
+                        <iframe [src]="t.iFrameUrl | safe" width="100%" height="80" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; encrypted-media; " loading="lazy"></iframe>
+                    </div>
+
+                    <div>
+                        <button class="lock-button-locked" (click)="unlockTrack(idx)">
+                            <mat-icon inline="true">lock</mat-icon>
+                        </button>
+                    </div>
+                    <div class="button-div">
+                        <button class="lock-button" (click)="deleteLockedTrack(idx)">
+                            <mat-icon inline="true">delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="hasTracks || hasTracks == undefined">
+                    <div class="spotify-track" *ngFor="let t of displayTracks; let idx = index">
+                        <div class="track">
+                            <iframe [src]="t.iFrameUrl | safe" width="100%" height="80" frameBorder="0"
+                                allowfullscreen="" allow="autoplay; encrypted-media; " loading="lazy"></iframe>
+                        </div>
+
+                        <div class="button-div">
+                            <button class="lock-button" type="button" (click)="lockTrack(idx)">
+                                <mat-icon inline="true">lock</mat-icon>
+                            </button>
+                        </div>
+                        <div class="button-div">
+                            <button class="lock-button" (click)="deleteTrack(idx)">
+                                <mat-icon inline="true">delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!hasTracks" class="error">
+                    <div>Unable to generate recommendation</div>
+                    <div (click)="getTracks()">
+                        <u>Please try again</u>
+                    </div>
+                </div>
+                <div *ngIf="hasTracks" class="track-end">
+                    <button (click)="spotify-track.scrollTop = 0"><mat-icon>arrow_upward</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-container">
+        <div class="detail-container">
+            <div class="trip-details">
+                <div class="left-panel">
+                    <div class="header">{{tripDisplay.travelDate}} ({{tripDisplay.departureTime}} -
+                        {{tripDisplay.arrivalTime}})
+                    </div>
+
+                    <div class="body">
+                        <div class="addresses">
+                            <p>{{tripDisplay.origin}}</p>
+                            <p>{{tripDisplay.destination}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="icon">
+                        <div *ngFor="let t of travelModes">
+                            <div *ngIf="tripDisplay.travelMode == (t.name | uppercase)">
+                                <mat-icon>{{t.icon}}</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="duration">
+                        {{tripDuration}}
+                    </div>
+                    <div class="view-map" (click)="openDialog('300ms', '300ms')">
+                        <button type="button">
+                            <mat-icon> map</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="playlist-details">
+                <div class="playlist-stats">
+                    <div class="playlist-mood">
+                        <div class="select-vibes">
+                            <div>
+                                Select Vibes:
+                            </div>
+                            <div class="vibes">
+                                <div [ngClass]="(idx === selectedVibeIdx) ? 'vibe-selected' : 'vibe'" *ngFor="let v of allSpotifyVibes; let idx = index">
+                                    <button (click)="selectVibe(idx)">{{v.name}}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas class="radar-chart" id="MyChart">{{ chart }}</canvas>
+                        </div>
+                    </div>
+                    <div class="related-artists">
+                        Fans also like:
+                        <div class="artists">
+                            <div *ngFor="let r of relatedArtists | slice:0:5; let idx = index" class="artist">
+                                <img [src]="r.images[2].url" alt="" (click)="openArtistUri(idx)">
+                                <div class="text">{{r.name}}</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,527 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    top: 50px;
+    position: relative;
+    padding-left: 60px;
+    color: white;
+}
+
+.no-trips {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+
+}
+
+.goToHome {
+    cursor: pointer;
+}
+
+.goToHome:hover {
+    color: white;
+}
+
+.panels {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.left-panel {
+    width: 40%;
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+mat-expansion-panel {
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+
+mat-panel-title {
+    color: white;
+}
+
+mat-panel-description {
+    color: grey;
+}
+
+mat-card {
+    background-color: rgb(50, 50, 50);
+    border-color: transparent;
+}
+
+mat-card-subtitle {
+    color: white;
+}
+
+mat-card-actions button {
+    color: white;
+}
+
+mat-card-actions button:hover {
+    text-decoration: underline;
+}
+
+.trip-card {
+    cursor: pointer;
+}
+
+.trip-card-selected {
+    border-left: 2px solid orange;
+    cursor: pointer;
+}
+
+.trip-card-selected .location {
+    font-size: smaller;
+}
+
+.trip-card:hover {
+    border-left: 2px solid orange;
+}
+
+.trip-card .location {
+    font-size: smaller;
+}
+.right-panel-not-selected {
+    width: 40%;
+    height: 80vh;
+    padding-left: 50px;
+    padding-top: 20px;
+    background-color: rgb(50, 50, 50);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+    font-size: smaller;
+}
+
+.right-panel-selected {
+
+    width: 45%;
+    height: 80vh;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(50, 50, 50);
+    border-radius: 5px;
+
+}
+
+.iframe {
+    width: 100%
+}
+
+.top {
+
+    display: flex;
+    flex-direction: row;
+    color: white;
+    padding-left: 10px;
+    padding-bottom: 30px;
+    /* background-color: red; */
+    justify-content: space-between;
+
+}
+
+.top .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    
+}
+
+.right-panel-selected .actions {
+    padding-bottom: 5px;
+}
+
+.right-panel-selected .actions button {
+    color: white;
+    text-decoration: underline;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.top .location {
+    width: 70%;
+    /* background-color: blue; */
+}
+
+
+.right {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding-right: 30px;
+    padding-top: 20px;
+
+}
+
+.right .duration {
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.right .mode mat-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 50px;
+}
+
+.view-map {
+    cursor: pointer;
+    padding: 10px 30px;
+    border: 1px solid white;
+    border-radius: 1000px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.view-map .text {
+    font-size: smaller;
+    width: 70%;
+    color: white;
+}
+
+.view-map button {
+    background-color: transparent;
+    border: none;
+}
+
+.view-map:hover {
+    background-color: orange;
+    border: none;
+}
+
+.view-map mat-icon {
+    color: white;
+}
+
+.modify{
+    height: 80vh;
+}
+
+.close-button {
+    display: flex;
+    justify-content: end;
+}
+
+.close-button button {
+    background-color: transparent;
+    border: 0;
+}
+.playlist-header {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* background-color: blue; */
+    gap: 10px;
+
+}
+
+.playlist-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    /* background-color: red; */
+}
+
+.playlist-name {
+    width: 100%;
+}
+
+.playlist-name input {
+    width: 100%;
+    height: 40px;
+    font-size: large;
+    border: none;
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+.playlist-desc {
+    width: 100%;
+    height: 75px;
+    border: none;
+    background-color: rgb(50, 50, 50);
+    color: white;
+
+}
+
+.playlist-uploadImg {
+
+    background-color: rgb(50, 50, 50);
+
+
+    
+
+}
+
+.file-upload {
+
+    background-color: rgb(48, 48, 48);
+    width: 130px;
+    height: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+
+}
+
+.file-upload img {
+
+    position: relative;
+    top: 0;
+    max-height:100%; 
+    max-width:100%;
+    object-fit: cover;
+    opacity: 0.6;
+
+}
+
+.upload-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+
+}
+
+.upload-btn mat-icon {
+
+    color: grey;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    /* position: absolute; */
+
+}
+
+.playlist-upload {
+
+    display: none;
+
+}
+
+.playlist-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+}
+
+.lock-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: rgb(48, 48, 48);
+    cursor: pointer;
+}
+
+.button-div :hover {
+
+    background-color: rgb(85, 85, 85);
+
+}
+
+.lock-button-locked {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+}
+
+.mat-icon {
+
+    color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+
+}
+
+.buttons i {
+    font-size: small;
+    color: grey;
+    text-align: center;
+    padding-right: 55px;
+}
+
+.buttons .options {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.buttons .generate {
+
+    font-size: large;
+    color: white;
+    height: 50px;
+    width: 150px;
+    background-color: #1DB954;
+    border-radius: 1000px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.generate:hover {
+    box-shadow: 0 5px 15px orange;
+}
+
+.buttons .renew {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.options-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    color: grey;
+    font-style: italic;
+    font-size: medium;
+}
+
+.spotify-tracks {
+
+    display: flex;
+    flex-direction: column;
+    /* background-color: #282828; */
+    /* background-color: purple; */
+    padding-top: 20px;
+    width: 45vw;
+    height: 70%;
+    align-items: left;
+    overflow-y: scroll;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+
+
+}
+
+.spotify-tracks .track-end {
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.spotify-tracks .error {
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    font-size: medium;
+}
+
+.error a {
+    color: white;
+}
+
+.error u {
+    cursor: pointer;
+}
+
+
+.spotify-track {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.spotify-track-locked {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.track {
+    width: 100%;
+}
+
+.lock-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: rgb(50, 50, 50);
+    cursor: pointer;
+}
+
+.button-div :hover {
+
+    background-color: rgb(85, 85, 85);
+
+}
+
+.lock-button-locked {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+}
+
+.mat-icon {
+
+    color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}

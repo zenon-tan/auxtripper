@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="login">
+        <h2>Register</h2>
+        <div *ngIf="isSuccessful">
+            <p>Signup successful!</p>
+        </div>
+        <div *ngIf="isSignUpFailed">
+            <p>{{errorMessage}}</p>
+        </div>
+        <div>
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmitRegistration()">
+                <div class="login">
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <mat-icon matPrefix>mood</mat-icon>
+                        <mat-label>First Name</mat-label>
+                        <input class="text" matInput formControlName="firstName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <mat-icon matPrefix>sentiment_satisfied_alt</mat-icon>
+                        <mat-label>Last Name</mat-label>
+                        <input class="text" matInput formControlName="lastName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <mat-icon matPrefix>mail_outline</mat-icon>
+                        <mat-label>Email</mat-label>
+                        <input class="text" type="email" matInput formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <mat-label>Username</mat-label>
+                        <input class="text" type="text" matInput formControlName="username">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                        <mat-icon matPrefix>fingerprint</mat-icon>
+                        <mat-label>Password</mat-label>
+                        <input class="text" type="password" matInput formControlName="password">
+                    </mat-form-field>
+                    <button type="submit" [disabled]="registrationForm.invalid">Sign up</button>
+                </div>
+            </form>
+        </div>
+        <div class="toRegister">
+            <button type="button" (click)="toRegister()">
+                <u>Login</u>
+            </button>
+        </div>
+    
+    </div>
+</div>

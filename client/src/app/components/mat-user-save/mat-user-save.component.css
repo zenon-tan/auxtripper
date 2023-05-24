@@ -1,0 +1,74 @@
+.container {
+    min-height: 250px;
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+
+.create {
+    top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+}
+
+.before {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.before p {
+    width: 70%;
+    text-align: center;
+}
+
+.after {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.after div {
+    width: 90%;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 1000px;
+    font-size: large;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    
+}
+
+.buttons button:hover {
+    background-color: #1DB954;
+    color: white;
+    border: 1px solid #1DB954;
+    border-radius: 1000px;
+    font-size: large;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    
+}

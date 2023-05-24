@@ -1,0 +1,36 @@
+<div class="container">
+    <div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+            <div class="login">
+                <h2>Login</h2>
+                <div *ngIf="isLoginFailed" class="status">
+                    <p>{{errorMessage}}</p>
+                </div>
+                <div *ngIf="status === 'expired'" class="status">
+                    <p>You have been logged out.</p>
+                    <p>Please log in again</p>
+                </div>
+                <div *ngIf="status === 'sign up success'" class="status">
+                    <p>Sign up successful!</p>
+                    <p>Please log in</p>
+                </div>
+                <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <mat-label>Username</mat-label>
+                    <input class="text" matInput formControlName="loginUsername">
+                </mat-form-field>
+                <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
+                    <mat-icon matPrefix>fingerprint</mat-icon>
+                    <mat-label>Password</mat-label>
+                    <input class="text" type="password" matInput formControlName="loginPassword">
+                </mat-form-field>
+                <button type="submit" [disabled]="loginForm.invalid">Log in</button>
+                <div class="toRegister">
+                    <button (click)="toRegister()">
+                        <u>Register</u>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

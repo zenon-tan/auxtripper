@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="create">
+        <div *ngIf="!created && emailEligible" class="before">
+            <p>Would you like to be notified of your itinerary nearer to your date of travel?</p>
+            <div class="buttons">
+                <button (click)="postPlaylist(true)">Yes, send me an email</button>
+                <button (click)="postPlaylist(false)">No</button>
+            </div>
+        </div>
+
+        <div *ngIf="!created && !emailEligible" class="before">
+            <p>Would you like to create your itinerary now?</p>
+            <div class="buttons">
+                <button (click)="postPlaylist(false)">Yes</button>
+            </div>
+        </div>
+        
+        <div *ngIf="created" class="after" class="after">
+            <div>Your playlist has Itinerary has been created!</div>
+            <div *ngIf="isEmail && emailEligible">
+                We will send you an email notification
+            </div>
+            <div>
+                Meanwhile, you can edit your playlist in the dashboard
+            </div>
+            <div class="buttons">
+                <button (click)="goToItinerary()">View my itinerary</button>
+            </div>
+        </div>
+    </div>
+</div>

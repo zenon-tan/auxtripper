@@ -1,0 +1,532 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 30px;
+    height: 100vh;
+    position: relative;
+    justify-content: center;
+    background-color: #282828;
+}
+
+.playlist-container {
+
+    width: 35vw;
+    height: 90%;
+    
+    padding: 30px;
+    padding-bottom: 10px;
+    background-color: #282828;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.playlist-header {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+
+}
+
+.playlist-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.playlist-name {
+    width: 100%;
+}
+
+.playlist-name input {
+    width: 100%;
+    height: 40px;
+    font-size: large;
+    border: none;
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+
+.playlist-desc {
+    width: 100%;
+    height: 75px;
+    border: none;
+    background-color: rgb(48, 48, 48);
+    color: white;
+
+}
+
+.playlist-uploadImg {
+
+    background-color: rgb(48, 48, 48);
+
+    
+
+}
+
+.file-upload {
+
+    background-color: rgb(48, 48, 48);
+    width: 130px;
+    height: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.file-upload img {
+
+    max-height:100%; 
+    max-width:100%;
+    object-fit:scale-down;
+
+}
+
+.upload-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.upload-btn .mat-icon {
+
+    color: grey;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+
+.playlist-upload {
+
+    display: none;
+
+}
+
+.playlist-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+}
+
+.spotify-tracks {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    width: 35vw;
+    height: 80%;
+    align-items: left;
+    overflow-y: scroll;
+}
+
+.spotify-tracks .track-end {
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.spotify-tracks .error {
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    font-size: medium;
+}
+
+.error a {
+    color: white;
+}
+
+.error u {
+    cursor: pointer;
+}
+
+
+.spotify-track {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.spotify-track-locked {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.track {
+    width: 100%;
+}
+
+.lock-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: rgb(48, 48, 48);
+    cursor: pointer;
+}
+
+.button-div :hover {
+
+    background-color: rgb(85, 85, 85);
+
+}
+
+.lock-button-locked {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 80px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+}
+
+.mat-icon {
+
+    color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+
+.right-container {
+    /* padding-top: 50px; */
+
+}
+
+.detail-container {
+    /* padding-top: 50px; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-end;
+    height: 90%;
+    /* background-color: blue; */
+    padding-top: 45px;
+}
+
+.trip-details {
+
+    width: 50vw;
+    height: 30%;
+    padding: 30px;
+    background-color: #282828;
+    /* background-color: red; */
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+
+}
+
+.left-panel {
+
+    width: 80%;
+    color: white;
+    
+}
+
+.left-panel .header {
+    font-size: x-large;
+
+}
+
+.left-panel .body {
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+.body .addresses {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    text-align: justify;
+    padding-right: 30px;
+}
+
+.body .time {
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+    padding-left: 30px;
+    font-size: large;
+}
+
+.right-panel {
+    
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    gap: 20px;
+    align-items: center;
+    /* padding-left: 30px; */
+
+}
+
+.right-panel .duration {
+    color: white;
+    width: 80%;
+    text-align: center;
+    
+}
+
+.right-panel .icon mat-icon {
+
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 60px;
+
+}
+
+.view-map {
+    cursor: pointer;
+    padding: 10px 30px;
+    border: 1px solid white;
+    border-radius: 1000px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.view-map .text {
+    font-size: smaller;
+    width: 70%;
+    color: white;
+}
+
+.view-map button {
+    background-color: transparent;
+    border: none;
+}
+
+.view-map:hover {
+    background-color: orange;
+    border: none;
+}
+
+.details {
+    height: 60%;
+    width: 100%;
+}
+
+.playlist-details {
+    width: 50vw;
+    height: 80%;
+    padding: 30px;
+    gap: 10px;
+    background-color: #282828;
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-stats {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.chart-container {
+    height: 100%;
+    width: 60%;
+    align-items: right;
+}
+
+.radar-chart {
+    height: 100%;
+    width: 100%;
+}
+
+.playlist-mood {
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: space-between;
+}
+
+.select-vibes {
+    color: white;
+    font-size: large;
+    width: 30%;
+    height: 97%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.vibes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vibe {
+    font-size: smaller;
+    cursor: pointer;
+}
+
+.vibe button {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 1000px;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.vibe button:hover {
+    color: white;
+    background-color: #1DB954;
+    border: 1px solid #1DB954;
+    border-radius: 1000px;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.vibe-selected {
+    font-size: smaller;
+    cursor: pointer;
+}
+
+.vibe-selected button {
+    color: white;
+    background-color: #1DB954;
+    border: 1px solid #1DB954;
+    border-radius: 1000px;
+    padding: 2px 10px;
+}
+
+.related-artists {
+
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 30%;
+    gap: 30px;
+
+}
+
+.related-artists .artists {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.artists .artist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    font-size: small;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.artist .text {
+    text-align: center;
+}
+
+.artist img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding-right: 5px;
+    vertical-align: middle;
+}
+
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+
+}
+
+.buttons i {
+    font-size: small;
+    color: grey;
+    text-align: center;
+    padding-right: 55px;
+}
+
+.buttons .options {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+.buttons .generate {
+
+    font-size: large;
+    color: white;
+    height: 50px;
+    width: 150px;
+    background-color: #1DB954;
+    border-radius: 1000px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.generate:hover {
+    box-shadow: 0 5px 15px orange;
+}
+
+.buttons .renew {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.options-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    color: grey;
+    font-style: italic;
+    font-size: medium;
+}

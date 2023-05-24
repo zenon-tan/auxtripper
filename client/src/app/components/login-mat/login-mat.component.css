@@ -1,0 +1,64 @@
+.container {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center; */
+    min-height: 700px;
+    background-color: rgb(48, 48, 48);
+}
+
+.login {
+    top: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login h2 {
+    color: white;
+}
+
+.login button {
+    background-color: green;
+    color: white;
+    padding: 15px 30px;
+    width: 200px;
+    border-radius: 10000px;
+    border: none;
+}
+
+.login mat-form-field {
+    color: white;
+}
+
+.login .text {
+
+    color: white;
+    font-size: small;
+
+}
+
+.toRegister button {
+    padding-top: 30px;
+    color: orange;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+}
+
+mat-label {
+    color: white;
+    font-size: small;
+}
+
+.status {
+    color: orangered;
+}
+
+.status p {
+    font-size: small;
+}

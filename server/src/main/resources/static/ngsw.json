@@ -1,0 +1,101 @@
+{
+  "configVersion": 1,
+  "timestamp": 1684938738640,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main.3162538fe065b861.js",
+        "/manifest.webmanifest",
+        "/polyfills.4709fd955acb2242.js",
+        "/runtime.1a00445dd3acf4d5.js",
+        "/styles.73002cb4a3afd343.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/controls/back-arrow.png",
+        "/assets/images/google-maps/directions/bicycling.png",
+        "/assets/images/google-maps/directions/bicycling_clicked.png",
+        "/assets/images/google-maps/directions/driving.png",
+        "/assets/images/google-maps/directions/driving_clicked.png",
+        "/assets/images/google-maps/directions/transit.png",
+        "/assets/images/google-maps/directions/transit_clicked.png",
+        "/assets/images/google-maps/directions/walking.png",
+        "/assets/images/google-maps/directions/walking_clicked.png",
+        "/assets/images/spotify-logo.webp"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/images/controls/back-arrow.png": "75c1aab0ae685cbaa93ccc2f754e8e34323c9ab0",
+    "/assets/images/google-maps/directions/bicycling.png": "cb39526390d1d2ba184e4086ae29ce1215d8c0fb",
+    "/assets/images/google-maps/directions/bicycling_clicked.png": "bf868f2f8b2b37d7ed6bb75e0ee7c7e7aa69c032",
+    "/assets/images/google-maps/directions/driving.png": "37e7e1784cc752c4a67e221121cd7b58a47fad61",
+    "/assets/images/google-maps/directions/driving_clicked.png": "7e11016c8dfa7250caaf8d46ffd4273812f1e409",
+    "/assets/images/google-maps/directions/transit.png": "4516b81fe535736e9969aa3d2deab811917df705",
+    "/assets/images/google-maps/directions/transit_clicked.png": "5e4f0dca18d46c22cb03474e0443d3a6914dfac9",
+    "/assets/images/google-maps/directions/walking.png": "b9f3d059931c5cbb2a64eb9b36140094157647dc",
+    "/assets/images/google-maps/directions/walking_clicked.png": "6d54726da844cb893d41aa0f1d54f726626e287b",
+    "/assets/images/spotify-logo.webp": "7eb0514f47ecdc4d7817cd64f1c4388721c8a648",
+    "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/index.html": "dd8d9a79fbad35cb16d448e4557d4c4b984009f1",
+    "/main.3162538fe065b861.js": "499511f4319001f0585c7a59a7ef7387bf5f282b",
+    "/manifest.webmanifest": "6bd446cf481e91dc7da6926e0d9b5fb2029c63fa",
+    "/polyfills.4709fd955acb2242.js": "e84ccb31e4635abe840faa80b63e4b3d65ce4212",
+    "/runtime.1a00445dd3acf4d5.js": "9ef35021d37b260a89ef61b6c971ba7383c8a689",
+    "/styles.73002cb4a3afd343.css": "bd48fa3b32a833b3fa21f45ca4fc01980a5bad25"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

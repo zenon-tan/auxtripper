@@ -1,0 +1,253 @@
+<div class="container">
+    <div class="sidebar-container" *ngIf="!showRoute">
+        <div class="search-bar">
+            <form [formGroup]="form" (ngSubmit)="processForm()">
+
+                <div class="search">
+                    <div class="travel-mode">
+                        <div *ngFor="let t of travelModes; let idx = index">
+                            <div *ngIf="t.name === travelMode">
+                                <button class="button-clicked" [disabled]>
+                                    <mat-icon>{{t.icon}}</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngIf="t.name != travelMode">
+                                <button>
+                                    <mat-icon (click)="selectTravelMode(idx)">{{t.icon}}</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-form-field appearance="outline" [style.height.px]=70>
+                        <mat-label>From</mat-label>
+                        <input class="text" ngx-google-places-autocomplete matInput formControlName="origin"
+                            (onAddressChange)="getOrigin($event)" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" [style.height.px]=70>
+                        <mat-label>To</mat-label>
+                        <input class="text" ngx-google-places-autocomplete matInput formControlName="destination"
+                            (onAddressChange)="getDest($event)" />
+                        <button type="submit" [disabled]="form.invalid || ifPast" matSuffix mat-icon-button
+                            aria-label="search">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <div class="transit-options">
+
+
+                        <div class="dropdown">
+
+                            <mat-form-field appearance="outline" >
+                                <mat-select formControlName="when" (valueChange)="setTravelTime($event)"
+                                    [(value)]="defaults.when">
+                                    <mat-option value="now" class="when">Leave Now</mat-option>
+                                    <mat-option value="depart" class="when">Depart By</mat-option>
+                                    <mat-option value="arrive" class="when">Arrive By</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="datepicker" *ngIf="when === 'depart' || when === 'arrive'">
+                            <mat-form-field appearance="outline">
+                                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                                    [formControl]="dateControl" [min]="time" formControlName="date"
+                                    [defaultTime]="time" (ngModelChange)="setFormTime($event)">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #picker [showSpinners]="true" [stepMinute]="15"
+                                    [touchUi]="true" [enableMeridian]="true" [color]="white" [hideTime]="false"
+                                    [defaultTime]="time">
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="options-panel">
+
+            <div *ngIf="saveRequest != null && hasResults" class="options">
+                <div *ngIf="(routeLength$ | async) as routeLength">
+                    <div *ngFor="let i of routes | slice:0:3; let idx = index">
+                        <div (click)="getAlternativeRoute(idx)">
+                            <div class="option">
+                                <div class="icon">
+                                    <div *ngIf="removedRoute != idx">
+                                        <div *ngIf="travelMode == 'DRIVING'">
+                                            <mat-icon> directions_car</mat-icon>
+                                        </div>
+                                        <div *ngIf="travelMode == 'TRANSIT'">
+                                            <mat-icon> directions_transit</mat-icon>
+                                        </div>
+                                        <div *ngIf="travelMode == 'WALKING'">
+                                            <mat-icon> directions_walk</mat-icon>
+                                        </div>
+                                        <div *ngIf="travelMode == 'BICYCLING'">
+                                            <mat-icon> directions_bike</mat-icon>
+                                        </div>
+                                        <mat-icon>{{saveRequest.travelMode | lowercase}}</mat-icon>
+                                    </div>
+                                    <div *ngIf="removedRoute == idx">
+                                        <mat-icon>directions_walk</mat-icon>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="travelMode != 'TRANSIT' || (travelMode == 'TRANSIT' && removedRoute == idx)"
+                                    class="time">
+                                    <div>
+                                        <b>via {{i.summary}}</b>
+                                    </div>
+                                    <div>
+                                        {{i.legs[0].distance.text}}
+                                    </div>
+                                    <div class="detail" (click)="showRoute = true" *ngIf="selectedRoute === idx">
+                                        <button>Select</button>
+                                    </div>
+                                </div>
+                                <div *ngIf="travelMode == 'TRANSIT'" class="time">
+                                    <div *ngIf="removedRoute != idx">
+                                        <b>{{i.legs[0].departure_time.text}} -
+                                            {{i.legs[0].arrival_time.text}}</b>
+                                        <div class="detail" (click)="showRoute = true" *ngIf="selectedRoute === idx">
+                                            <button>Select</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="duration">
+                                    <div>
+                                        {{i.legs[0].duration.text}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!hasResults" class="no-results">
+
+                <p>No results available for this particular route.</p>
+                <p>Try again with a different route, timing or travel mode</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showRoute && hasResults" class="route">
+        <div class="back">
+            <button class="arrow" (click)="showRoute = false" mat-icon-button>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <div class="text">
+                <div><span>from </span>{{origin.address}}</div>
+                <div><span>to </span> {{destination.address}}</div>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="date">
+                {{travelDate}}
+            </div>
+            <div *ngIf="travelMode == 'TRANSIT'">
+                <div class="time"> {{routes[selectedRoute].legs[0].departure_time.text}} -
+                    {{routes[selectedRoute].legs[0].arrival_time.text}}
+                </div>
+                <div class="duration">({{routes[selectedRoute].legs[0].duration.text}})</div>
+            </div>
+
+            <div *ngIf="travelMode != 'TRANSIT'">
+                <div class="time">
+                    <b>via {{routes[selectedRoute].summary}}</b>
+                </div>
+                <div class="duration">
+                    {{routes[selectedRoute].legs[0].distance.text}}
+                </div>
+            </div>
+            <div class="generate-button" (click)="connectSpotify()">
+                <div>Generate Songs</div>
+            </div>
+        </div>
+
+        <div class="origin">
+            <div class="time" *ngIf="travelMode == 'TRANSIT'">
+                {{routes[selectedRoute].legs[0].departure_time.text}} </div>
+            <div class="place">{{origin.address}}</div>
+        </div>
+
+        <div *ngIf="saveRequest != null && travelMode == 'TRANSIT'" class="details">
+            <div *ngIf="(routeLength$ | async) as routeLength">
+                <div *ngFor="let i of routes[selectedRoute].legs[0].steps; let idx = index; let isLast = last">
+
+                    <div *ngIf="removedRoute == null && removedRoute != idx">
+                        <div class="location" *ngIf="i.travel_mode == 'TRANSIT'">
+                            <div class="time">{{i.transit.departure_time.text}}</div>
+                            <div class="place">{{i.transit.departure_stop}}</div>
+                        </div>
+
+                        <div class="instruction">
+                            <div class="icon">
+                                <img src="./assets/images/google-maps/directions/{{i.travel_mode | lowercase}}.png">
+                            </div>
+                            <div *ngIf="i.travel_mode == 'TRANSIT'" class="text">
+                                <div>
+                                    <span>
+                                        <b style="color: white; padding-left: 2px; padding-right: 2px;"
+                                            [ngStyle]="{'background-color': i.transit.line.color}">{{i.transit.line.name}}</b>
+
+                                        {{i.instructions}}
+
+                                    </span>
+                                    <div>{{i.duration.text}} ({{i.transit.num_stops}} stops)</div>
+                                </div>
+                            </div>
+                            <div *ngIf="i.travel_mode == 'WALKING'" class="text">
+                                <div>Walk</div>
+                                <div>About {{i.duration.text}}, {{i.distance.text}}</div>
+                            </div>
+                        </div>
+                        <div *ngIf="i.travel_mode == 'TRANSIT'" class="location">
+                            <div class="time">{{i.transit.arrival_time.text}}</div>
+                            <div class="place">{{i.transit.arrival_stop}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="removedRoute == idx">
+                        <div class="driving">
+                            <div class="icon">
+                                <mat-icon> directions_walk</mat-icon>
+                            </div>
+                            <div class="text" [innerHTML]="i.instructions"></div>
+                            <div class="distance"><b>{{i.distance.text}}</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="saveRequest != null && travelMode != 'TRANSIT'" class="details">
+            <div *ngIf="(routeLength$ | async) as routeLength">
+                <div *ngFor="let i of routes[selectedRoute].legs[0].steps; let idx = index; let isLast = last">
+                    <div class="driving">
+                        <div class="icon">
+                            <img src="./assets/images/google-maps/directions/{{i.travel_mode | lowercase}}.png">
+                        </div>
+                        <div class="text" [innerHTML]="i.instructions"></div>
+                        <div class="distance"><b>{{i.distance.text}}</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="destination">
+            <div class="time" *ngIf="saveRequest.travelMode == 'TRANSIT'">
+                {{routes[selectedRoute].legs[0].arrival_time.text}}</div>
+            <div class="place">{{destination.address}}</div>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <google-map class="map" height="100%" width="100%" #GoogleMap [options]="options" [center]="center"
+            [zoom]="zoom">
+            <map-marker *ngIf="marker != null" [position]="center"></map-marker>
+            <map-directions-renderer *ngIf="(directionsResults$ | async) as directionsResults"
+                [options]="directionsRenderOption" [directions]="directionsResults">
+            </map-directions-renderer>
+        </google-map>
+    </div>
+</div>

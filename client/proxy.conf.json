@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "https://aux.up.railway.app",
+      "secure": false
+    }
+  }

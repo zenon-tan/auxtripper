@@ -1,0 +1,379 @@
+.container {
+    
+    position: relative;
+    height: 95vh;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    gap: 20px;
+}
+
+.artists {
+
+    height: 50%;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    /* box-sizing: content-box; */
+    border: none;
+    overflow: scroll;
+    /* position: relative; */
+    top: 30px;
+    /* background-color: red; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+}
+
+.artists .artists-search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 40px;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.artists .artists-search h2 {
+    color: white;
+    /* background-color: red; */
+}
+
+.artists .artists-search i {
+
+    /* background-color: red; */
+    position: relative;
+    top: -18px;
+}
+
+.subtitle {
+
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.artists-search .search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 30px;
+    height: 50px;
+}
+
+.artist-input {
+
+    border-radius: 1000px;
+    padding: 15px;
+    background-color: lightgrey;
+    width: fit-content;
+}
+
+.artist-input input {
+
+    border: 1px solid lightgrey;
+    margin: auto;
+    background-color: transparent;
+
+    width: fit-content;
+}
+
+@media (min-width: 1000px) {
+
+    .artists .selection {
+
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding-top: 20px;
+        border: none;
+    
+        gap: 15px;
+
+    }
+    
+}
+
+@media (max-width: 1000px) {
+    .artists .selection {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding-top: 20px;
+        border: none;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 700px) {
+    .artists .selection {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding-top: 20px;
+        border: none;
+        gap: 15px;
+    }
+}
+
+.genres {
+    
+    height: 35%;
+    padding-top: 20px;
+    padding-left: 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    overflow-y: scroll;
+}
+
+
+.genres .selection {
+
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    overflow: scroll;
+    gap: 15px;
+    border: none;
+
+}
+
+.selection .option {
+    border: none;
+    border-radius: 1000px;
+    height: 45px;
+    width: fit-content;
+    min-width: 100px;
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    justify-content: center;
+    font-size: small;
+}
+
+.selection .option span {
+
+    display: flex;
+    padding-left: 5px;
+
+}
+
+.selection img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    padding-right: 5px;
+    vertical-align: middle;
+
+
+}
+
+.genres .genre-search {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 40px;
+    align-items: center;
+}
+
+.genres .genre-search h2 {
+
+    color: white;
+}
+
+.genres .genre-search i {
+
+    position: relative;
+    top: -18px;
+}
+
+
+.genre-input {
+    border-radius: 1000px;
+    padding: 15px;
+    background-color: lightgrey;
+    width: fit-content;
+}
+
+.genre-input input {
+
+    border: 1px solid lightgrey;
+    margin: auto;
+    background-color: transparent;
+
+    width: fit-content;
+}
+
+.top-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    height: 10%;
+    padding-bottom: 30px;
+
+
+}
+
+.generate {
+
+    /* border: 1px solid lightgrey; */
+    position: relative;
+    top: 30px;
+    padding-top: 30px;
+    font-size: small;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    
+
+}
+
+.generate button {
+
+    font-size: medium;
+    color: white;
+    height: 50px;
+    width: 100px;
+    background-color: #1DB954;
+    border-radius: 1000px;
+    border: none;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.generate button .button-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.generate button:disabled {
+
+    font-size: medium;
+    color: white;
+    background-color: grey;
+    opacity: 0.7;
+}
+
+
+.selected {
+    /* border: 1px solid lightgrey; */
+    position: relative;
+    top: 30px;
+    padding-top: 15px;
+    font-size: small;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.selected .greetings {
+    font-size: large;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+    color: white;
+}
+
+.greetings span {
+
+    color: #1DB954;
+
+}
+
+.artists .selected-artists {
+
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+
+}
+
+
+.selected-artists .selected-a {
+    background-color: #1DB954;
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 1000px;
+    width: fit-content;
+    height: fit-content;
+
+}
+
+.genres .selected-genres {
+
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+
+}
+
+
+.selected-genres .selected-g {
+    background-color: rgb(212, 155, 32);
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 1000px;
+    width: fit-content;
+    height: fit-content;
+
+}
+
+
+
+.artists-search .toggle {
+
+    /* background-color: lightgrey; */
+    font-size: small;
+
+}
+
+.artists .selection .mat-button-toggle {
+    background-color: lightgrey;
+    color: black;
+}
+
+.artists .selection .mat-button-toggle-checked {
+    background-color: #1DB954;
+    color: white;
+}
+
+.genres .selection .mat-button-toggle {
+    background-color: lightgrey;
+    color: black;
+}
+
+.genres .selection .mat-button-toggle-checked {
+    background-color: rgb(212, 155, 32);
+    color: white;
+}
+
+i {
+    font-size: small;
+    color: grey;
+
+
+}
+
+h2 {
+
+}

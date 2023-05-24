@@ -1,0 +1,53 @@
+.navbar {
+
+    top: 10px;
+    z-index: 9;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    padding-right: 20px;
+
+}
+
+
+mat-icon {
+
+    color: #1DB954;
+
+}
+
+.home {
+
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(48, 48, 48);
+}
+
+
+.app-outlet {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+mat-menu-content {
+    background-color: grey !important;
+}
+
+
+
