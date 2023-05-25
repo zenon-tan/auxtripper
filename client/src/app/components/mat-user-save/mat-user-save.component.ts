@@ -163,7 +163,7 @@ export class MatUserSaveComponent implements OnInit {
                   to ${this.direction.directionRequest.destination.address} on the
                   ${this.direction.travelDate} is ready!</p>
                   <p>Please click <a href="https://open.spotify.com/playlist/${playlistId}">here</a> to view it now!</p>
-                  <p>You can also log in to your <a href="${UserConstants.WEBSITE_URL}dashboard">dashboard</a> to view or modify your playlists!</p>
+                  <p>You can also log in to your <a href="${UserConstants.WEBSITE_URL}/dashboard">dashboard</a> to view or modify your playlists!</p>
                   <p>Enjoy your trip!</p>
                   <p>Auxtripper</P>
                   `
