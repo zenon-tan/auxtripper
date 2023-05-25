@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { DataConstants } from 'src/app/constants/google-route.constant';
 import { FormatTimeService } from 'src/app/services/format-time.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
-import { createClient } from 'pexels';
 
 @Component({
   selector: 'app-landing',

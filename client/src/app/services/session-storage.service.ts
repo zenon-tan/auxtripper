@@ -49,7 +49,7 @@ export class SessionStorageService {
 
   clearForLoginUser() {
     this.clearTempObjects()
-    this.clearTripObjects()
+    // this.clearTripObjects()
     this.clearSpotifyObjects()
     this.clearItinerary()
     this.clearUserDataForEmail()

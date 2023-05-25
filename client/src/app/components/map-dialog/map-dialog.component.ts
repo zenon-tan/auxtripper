@@ -34,7 +34,7 @@ export class MapDialogComponent implements OnInit, OnDestroy {
 
   travelDate: string = ''
 
-  zoom = 16
+  zoom = 14
   center!: google.maps.LatLngLiteral
   marker!: any
 

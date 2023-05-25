@@ -35,7 +35,7 @@ public class ItineraryController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<String> saveItinerary(@RequestBody Itinerary itinerary) {
-        System.out.println(itinerary);
+        // System.out.println(itinerary);
         itinerary.setId(UUID.randomUUID().toString().substring(0, 8));
         itineraryService.saveData(itinerary);
         JsonObject response = Json.createObjectBuilder().add("id", itinerary.getId()).build();

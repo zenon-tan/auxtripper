@@ -19,7 +19,6 @@ import auxtripper.server.authentication.services.AuthService;
 @RequiredArgsConstructor
 // @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
 // @CrossOrigin(origins = "https://auxtripper.up.railway.app", allowedHeaders = "*", allowCredentials = "true")
-// @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "true")
 public class AuthController {
 
     @Autowired

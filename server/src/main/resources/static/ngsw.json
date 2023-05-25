@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1684938738640,
+  "timestamp": 1684974976119,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.3162538fe065b861.js",
+        "/main.6cb885316334dcf2.js",
         "/manifest.webmanifest",
         "/polyfills.4709fd955acb2242.js",
         "/runtime.1a00445dd3acf4d5.js",
@@ -72,8 +72,8 @@
     "/assets/images/google-maps/directions/walking_clicked.png": "6d54726da844cb893d41aa0f1d54f726626e287b",
     "/assets/images/spotify-logo.webp": "7eb0514f47ecdc4d7817cd64f1c4388721c8a648",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "dd8d9a79fbad35cb16d448e4557d4c4b984009f1",
-    "/main.3162538fe065b861.js": "499511f4319001f0585c7a59a7ef7387bf5f282b",
+    "/index.html": "0d20d8c4a05d31f5f46e666b5769dfe53c9f23e2",
+    "/main.6cb885316334dcf2.js": "f323a315a919873b14e3cb7e932965a6b93d94b7",
     "/manifest.webmanifest": "6bd446cf481e91dc7da6926e0d9b5fb2029c63fa",
     "/polyfills.4709fd955acb2242.js": "e84ccb31e4635abe840faa80b63e4b3d65ce4212",
     "/runtime.1a00445dd3acf4d5.js": "9ef35021d37b260a89ef61b6c971ba7383c8a689",
