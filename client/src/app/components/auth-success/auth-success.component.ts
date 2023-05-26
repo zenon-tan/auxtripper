@@ -66,26 +66,31 @@ export class AuthSuccessComponent {
                         }
                       )
                     }
-                    this.router.navigate(['/playlist/new'])
-                  }
-                ).catch(
-                  (e) => {
-                    console.info(e)
                   }
                 )
-
               }
               this.spotifyGetUserService.getSpotifyCurrentUser().then(
                 (data:any) => {
                   this.spotifyUser = this.spotifyObjectService.convertToUser(data)
                   sessionStorage.setItem('spotifyUser', JSON.stringify(this.spotifyUser))
-                  this.router.navigate(['/playlist/new'])
+
                 }
               )
-              // this.router.navigate(['/playlist/new'])
             }
           )
-          // this.router.navigate(['/playlist/new'])
+  
+          if(sessionStorage.getItem('redirectUrl') !== null) {
+            const redirectUrl = sessionStorage.getItem('redirectUrl')!
+            sessionStorage.removeItem('redirectUrl')!
+            if(redirectUrl.search('trip') >= 1) {
+              this.router.navigate(['/playlist/new'])
+            } else {
+              this.router.navigateByUrl(redirectUrl)
+            }
+            
+          } else {
+            this.router.navigate(['/playlist/new'])
+          }
         }
       )
   }

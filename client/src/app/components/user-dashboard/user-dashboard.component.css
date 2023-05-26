@@ -15,7 +15,6 @@
     justify-content: center;
     align-items: center;
     color: grey;
-
 }
 
 .goToHome {
@@ -263,12 +262,7 @@ mat-card-actions button:hover {
 }
 
 .playlist-uploadImg {
-
     background-color: rgb(50, 50, 50);
-
-
-    
-
 }
 
 .file-upload {
@@ -280,8 +274,6 @@ mat-card-actions button:hover {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
-
 }
 
 .file-upload img {
@@ -292,7 +284,6 @@ mat-card-actions button:hover {
     max-width:100%;
     object-fit: cover;
     opacity: 0.6;
-
 }
 
 .upload-btn {
@@ -300,23 +291,17 @@ mat-card-actions button:hover {
     border: none;
     cursor: pointer;
     position: absolute;
-
 }
 
 .upload-btn mat-icon {
-
     color: grey;
     justify-content: center;
     display: flex;
     align-items: center;
-    /* position: absolute; */
-
 }
 
 .playlist-upload {
-
     display: none;
-
 }
 
 .playlist-desc {
@@ -356,12 +341,10 @@ mat-card-actions button:hover {
 }
 
 .mat-icon {
-
     color: white;
     justify-content: center;
     display: flex;
     align-items: center;
-
 }
 
 .buttons {
@@ -369,8 +352,6 @@ mat-card-actions button:hover {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-
-
 }
 
 .buttons i {
@@ -387,7 +368,7 @@ mat-card-actions button:hover {
 }
 
 
-.buttons .generate {
+.generate {
 
     font-size: large;
     color: white;
@@ -400,8 +381,15 @@ mat-card-actions button:hover {
     transition: all 0.2s ease-in-out;
 }
 
-.generate:hover {
-    box-shadow: 0 5px 15px orange;
+.generate-invalid {
+    font-size: large;
+    color: white;
+    height: 50px;
+    width: 150px;
+    background-color: grey;
+    border-radius: 1000px;
+    border: none;
+    cursor: default;
 }
 
 .buttons .renew {
@@ -421,19 +409,13 @@ mat-card-actions button:hover {
 }
 
 .spotify-tracks {
-
     display: flex;
     flex-direction: column;
-    /* background-color: #282828; */
-    /* background-color: purple; */
     padding-top: 20px;
     width: 45vw;
     height: 70%;
     align-items: left;
     overflow-y: scroll;
-    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
-
-
 }
 
 .spotify-tracks .track-end {
@@ -444,12 +426,13 @@ mat-card-actions button:hover {
 }
 
 .spotify-tracks .error {
+    padding-top: 30px;
     color: white;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 50vh;
     font-size: medium;
 }
@@ -464,23 +447,19 @@ mat-card-actions button:hover {
 
 
 .spotify-track {
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-
 }
 
 .spotify-track-locked {
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-
 }
 
 .track {
@@ -500,9 +479,7 @@ mat-card-actions button:hover {
 }
 
 .button-div :hover {
-
     background-color: rgb(85, 85, 85);
-
 }
 
 .lock-button-locked {
@@ -518,10 +495,8 @@ mat-card-actions button:hover {
 }
 
 .mat-icon {
-
     color: white;
     justify-content: center;
     display: flex;
     align-items: center;
-
 }

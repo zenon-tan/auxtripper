@@ -10,7 +10,6 @@ export class SpotifyConstants {
     public static SPOTIFY_AUTHORIZE = 'https://accounts.spotify.com/authorize?'
     public static SPOTIFY_TOKEN = 'https://accounts.spotify.com/api/token'
 
-    public static CLIENTID = Environment.SPOTIFY_CLIENT_ID
     public static SCOPE = 'user-read-private, user-read-email, user-top-read, playlist-modify-public, playlist-modify-private, user-follow-read, ugc-image-upload'
 
     // public static REDIRECT_URL = 'http://localhost:4200/auth-success'

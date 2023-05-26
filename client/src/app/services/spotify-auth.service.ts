@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { SpotifyConstants } from 'src/app/constants/spotify-api.constant'
 import { PkceCodeService } from './pkce-code.service';
+import { Environment } from '../env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class SpotifyAuthService {
 
         let args = new URLSearchParams({
           response_type: 'code',
-          client_id: SpotifyConstants.CLIENTID,
+          client_id: Environment.SPOTIFY_CLIENT_ID,
           scope: SpotifyConstants.SCOPE,
           redirect_uri: SpotifyConstants.REDIRECT_URL,
           state: state,
@@ -49,7 +50,7 @@ export class SpotifyAuthService {
     .set('grant_type', 'authorization_code')
     .set('code', code)
     .set('redirect_uri', SpotifyConstants.REDIRECT_URL)
-    .set('client_id', SpotifyConstants.CLIENTID)
+    .set('client_id', Environment.SPOTIFY_CLIENT_ID)
     .set('code_verifier', codeVerifier)
 
     let headers = new HttpHeaders()
@@ -64,7 +65,7 @@ export class SpotifyAuthService {
     let body = new HttpParams()
     .set('grant_type', 'refresh_token')
     .set('refresh_token', refreshToken)
-    .set('client_id', SpotifyConstants.CLIENTID)
+    .set('client_id', Environment.SPOTIFY_CLIENT_ID)
 
     let headers = new HttpHeaders()
     .set('Content-Type', 'application/x-www-form-urlencoded')

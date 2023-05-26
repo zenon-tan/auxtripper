@@ -127,8 +127,8 @@
             </form>
 
             <div class="buttons">
-                <div *ngIf="hasTracks"><i>{{displayTrackIds.length + lockedTrackIds.length}} tracks,
-                        {{playlistDuration}}</i></div>
+                <!-- <div *ngIf="hasTracks"><i>{{displayTrackIds.length + lockedTrackIds.length}} tracks,
+                        {{playlistDuration}}</i></div> -->
                 <button class="renew" (click)="getTracks()">
                     <mat-icon>autorenew</mat-icon>
                 </button>
@@ -136,7 +136,7 @@
                     <mat-icon>control_point</mat-icon>
                 </button>
 
-                <button type="button" class="generate" (click)="processForm()"
+                <button type="button" [ngClass]="buttonValidity" class="generate" (click)="processForm()"
                     [disabled]="!isPlaylistModified">Modify</button>
             </div>
 
@@ -168,7 +168,7 @@
                 </div>
 
 
-                <div>
+                <div *ngIf="hasTracks">
                     <div class="spotify-track" *ngFor="let t of displayTrackIds; let idx = index">
                         <div class="track">
                             <iframe [src]="t | safe" width="100%" height="80" frameBorder="0" allowfullscreen=""

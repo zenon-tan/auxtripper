@@ -14,7 +14,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpotifyObjectService } from 'src/app/services/spotify-object.service';
 import { SpotifyGetUserService } from 'src/app/services/spotify-api.service';
 import { ModifyPlaylistRequest } from 'src/app/models/playlist';
-import { FormatTimeService } from 'src/app/services/format-time.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -27,6 +26,8 @@ export class UserDashboardComponent implements OnInit {
   imageFile!: ElementRef
 
   matCardStyle!: string
+
+  buttonValidity = 'generate-invalid'
 
   form!: FormGroup
   travelModes: any[] = DataConstants.travelModes
@@ -91,7 +92,6 @@ export class UserDashboardComponent implements OnInit {
     private googleRequestService: GoogleRequestService,
     private spotifyModelService: SpotifyObjectService,
     private spotifyGetUserService: SpotifyGetUserService,
-    private formatTimeService: FormatTimeService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -101,7 +101,7 @@ export class UserDashboardComponent implements OnInit {
     this.saveDataService.getAllUserItineraries(this.authStorageService.getUser().username).then(
       (data: any) => {
         this.username = this.authStorageService.getUser().username
-        // console.info(data)
+  
         this.itineraries = data as Itinerary[]
 
         this.sortItinerariesByTravelDate()
@@ -181,12 +181,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   selectTrip(date: string, idx: number) {
-    // console.info(idx)
     this.selectedTripIdx = idx
     this.matCardStyle = 'trip-card-selected'
     this.isTripSelected = true
     this.selectedTrip = this.sortByDateMap.get(date)![idx]
-    // console.info(this.selectedTrip)
     const direction = this.selectedTrip.itinerary.direction
     this.convertToMapDialogDirection(direction)
 
@@ -195,25 +193,34 @@ export class UserDashboardComponent implements OnInit {
     this.playlistUrl = 'https://open.spotify.com/playlist/' + this.playlistId
     this.playlistUri = 'spotify:playlist:' + this.playlistId
 
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { id: this.selectedTrip.itinerary.id },
+        queryParamsHandling: 'merge'
+      });
+
   }
 
   modifyPlaylist() {
     this.isModifyTrip = true
-    // console.info(this.selectedTrip)
     this.oldSongs = this.selectedTrip.itinerary.playlist.tracks
     this.oldSongIds = this.selectedTrip.itinerary.playlist.playlistRequest.songs
-    // console.info(this.oldSongIds)
+
     for (let t of this.oldSongs) {
       const uri = 'https://open.spotify.com/embed/track/' + t.trackId + '?utm_source=generator&theme=0'
       this.displayTrackIds.push(uri)
+      this.displayTracks.push(t)
+      this.allTracksMap.set(uri, t)
     }
+
     this.artists = this.selectedTrip.itinerary.playlist.artists
     this.setUpSelectedArtists()
 
     this.dbplaylistId = this.selectedTrip.itinerary.playlist.playlistRequest.id
 
     this.selectedGenres = this.selectedTrip.itinerary.playlist.genres
-    // console.info(this.selectedGenres)
     this.imageData = this.selectedTrip.itinerary.playlist.playlistRequest.imageData
 
     this.oldPlaylistTitle = this.selectedTrip.itinerary.playlist.playlistRequest.title
@@ -223,10 +230,20 @@ export class UserDashboardComponent implements OnInit {
 
     this.form.controls['playlistTitle'].setValue(this.oldPlaylistTitle)
     this.form.controls['playlistDescription'].setValue(this.oldPlaylistDescription)
-    // this.form.controls['playlistImage'].setValue(this.imageData)
     this.form.controls['isPublic'].setValue(this.oldIsPublic)
     this.form.controls['isCollaborative'].setValue(this.oldIsCollaborative)
+
+    if (JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!) != null
+      || JSON.parse(sessionStorage.getItem('_temp-display-trackIds')!) != null
+      || JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!) != null) {
+
+      this.lockedTracks = JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!)
+      this.lockedTrackIds = JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!)
+      this.displayTrackIds = JSON.parse(sessionStorage.getItem('_temp-display-trackIds')!)
+
+    }
   }
+
 
   deleteTrip() {
     this.isTripSelected = false
@@ -239,7 +256,6 @@ export class UserDashboardComponent implements OnInit {
       }
     }
     if (this.sortByDateMap.get(this.selectedTrip.tripDisplay.travelDate)!.length <= 0) {
-      console.info('hey hey')
       this.sortByDateMap.delete(this.selectedTrip.tripDisplay.travelDate)
       this.sortedTravelDates.splice(this.sortedTravelDates.indexOf(this.selectedTrip.tripDisplay.travelDate), 1)
     }
@@ -299,12 +315,13 @@ export class UserDashboardComponent implements OnInit {
     let selectedTrackIFrames: string[] = []
     let trackIds: string[] = []
 
-    // Combined locked and display tracks
     selectedTrackIFrames.push(...this.lockedTrackIds, ...this.displayTrackIds)
+
     for (let t of selectedTrackIFrames) {
+      
       if (this.allTracksMap.has(t)) {
         tracks.push(this.allTracksMap.get(t)!)
-        trackIds.push(this.allTracksMap.get(t)!.uri)
+        trackIds.push('spotify:track:' + this.allTracksMap.get(t)!.trackId)
       }
     }
 
@@ -321,39 +338,20 @@ export class UserDashboardComponent implements OnInit {
 
     }
 
-    console.info(this.oldSongIds)
-    console.info('trackIds: ' + trackIds)
-    this.spotifyGetUserService.modifyPlaylistDetails(modifyPlaylistRequest).then(
-      (data:any) => {
-        console.info(data)
-      }
-    )
-    this.spotifyGetUserService.deleteItemsFromPlaylist(modifyPlaylistRequest, this.oldSongIds).then(
-      (data:any) => {
-        console.info(data)
-      }
-    )
-    this.spotifyGetUserService.addItemsToPlaylist(trackIds, this.playlistId).then(
-      (data:any) => {
-        console.info(data)
-      }
-    )
-    // if (trackIds.length > 0) {
-    //   this.spotifyGetUserService.deleteItemsFromPlaylist(modifyPlaylistRequest, this.oldSongIds)
-    //   this.spotifyGetUserService.addItemsToPlaylist(trackIds, this.playlistId)
-    // }
+    this.spotifyGetUserService.modifyPlaylistDetails(modifyPlaylistRequest)
+    this.spotifyGetUserService.deleteItemsFromPlaylist(modifyPlaylistRequest, this.oldSongIds)
+    this.spotifyGetUserService.addItemsToPlaylist(trackIds, this.playlistId)
+
     if (this.imageData != '') {
       this.spotifyGetUserService.addImageToPlaylist(this.imageData, this.playlistId)
     }
-    this.saveDataService.modifyPlaylist(modifyPlaylistRequest).then(
-      (data:any) => {
-        console.info(data)
-      }
-    )
+    this.saveDataService.modifyPlaylist(modifyPlaylistRequest)
 
+    sessionStorage.removeItem('_temp-locked-tracks')
+    sessionStorage.removeItem('_temp-locked-trackIds')
+    sessionStorage.removeItem('_temp-display-trackIds')
 
     this.isModifyTrip = false
-    // this.router.navigate(['/dashboard'], { queryParams: { 'id': this.selectedTrip.itinerary.id } })
     this.router.navigateByUrl('/dashboard?id=' + this.selectedTrip.itinerary.id)
     window.location.reload()
   }
@@ -365,8 +363,9 @@ export class UserDashboardComponent implements OnInit {
   getTracks() {
     /* Spotify Recommendations only produces 100 tracks per request
     In order to get more than 100 songs, split into several requests */
-    this.hasTracks = false
+
     this.isPlaylistModified = true
+    this.displayTracks = []
     this.displayTrackIds = []
     let promiseArr = []
     let numArr = []
@@ -393,52 +392,46 @@ export class UserDashboardComponent implements OnInit {
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        if (data[0].status == 'rejected') {
-          this.router.navigate(['/connect-spotify'])
-        }
-
         if (data[0].value.tracks.length != 0) {
           this.hasTracks = true
 
-          for (let d of data) {
-            this.allTracks = this.spotifyModelService.convertToTracks(data[0].value.tracks)
-            let tempTrackiFrameUrl: string[] = []
-            for (let t of this.allTracks) {
-              tempTrackiFrameUrl.push(t.iFrameUrl)
+          this.allTracks = this.spotifyModelService.convertToTracks(data[0].value.tracks)
+
+          for (let t of this.allTracks) {
+            if(!this.allTracksMap.has(t.iFrameUrl)) {
               this.allTracksMap.set(t.iFrameUrl, t)
             }
-            this.allTrackIds.push(...tempTrackiFrameUrl)
           }
 
           const middleIndex = Math.ceil(this.allTracks.length / 2);
-          const randomTracks = this.allTracks.sort(() => 0.5 - Math.random())
-          this.displayTracks = randomTracks.splice(0, middleIndex)
-          this.backupTracks = randomTracks
+          this.allTracks = this.allTracks.sort(() => 0.5 - Math.random())
 
-          let trackIds: string[] = []
+
+          this.displayTracks = this.allTracks.splice(0, middleIndex)
 
           for (let t of this.displayTracks) {
             this.displayTrackIds.push(t.iFrameUrl)
-            trackIds.push(t.trackId)
           }
+
+          this.backupTracks = this.allTracks.splice(middleIndex)
           for (let t of this.backupTracks) {
             this.backupTrackIds.push(t.iFrameUrl)
           }
 
-          const trackIdString = trackIds.join(',')
+          this.setTracksToSession()
 
-          this.spotifyGetUserService.getAudioFeatures(trackIdString).then(
-            (data: any) => {
-              this.vibe = this.spotifyModelService.calculateAverageFeatures(data.audio_features)
-              this.duration = this.vibe.totalDuration
-              this.playlistDuration = this.formatTimeService.formatToDisplayDuration(this.vibe.totalDuration / 1000)
-            }
-          )
         } if (data[0].value.length == 0) {
           this.getTracks()
         }
       }
+    ).catch(
+      (err) => {
+        console.info('error in getting tracks')
+        this.hasTracks = false
+      }
     )
+
+    this.buttonValidity = 'generate'
   }
 
   shuffleSeeds() {
@@ -454,29 +447,50 @@ export class UserDashboardComponent implements OnInit {
 
   deleteTrack(idx: number) {
     if (this.backupTrackIds.length > 0) {
+      this.displayTracks.splice(idx, 1)
+      this.displayTracks.splice(idx, 0, this.backupTracks[0])
+      this.backupTracks.splice(0, 1)
       this.displayTrackIds.splice(idx, 1)
       this.displayTrackIds.splice(idx, 0, this.backupTrackIds[0])
       this.backupTrackIds.splice(0, 1)
     } else {
+      this.displayTracks.splice(idx, 1)
       this.displayTrackIds.splice(idx, 1)
     }
+
+    this.buttonValidity = 'generate'
+
+    this.setTracksToSession()
   }
 
   deleteLockedTrack(idx: number) {
     this.lockedTracks.splice(idx, 1)
     this.displayTracks.splice(idx, 0, this.backupTracks[0])
+    this.lockedTrackIds.splice(idx, 1)
+    this.displayTrackIds.splice(idx, 0, this.backupTracks[0].iFrameUrl)
     this.backupTracks.splice(0, 1)
+
+    this.setTracksToSession()
   }
 
   unlockTrack(idx: number) {
+    this.displayTracks.splice(idx, 0, this.lockedTracks[idx])
+    this.lockedTracks.splice(idx, 1)
     this.displayTrackIds.splice(idx, 0, this.lockedTrackIds[idx])
     this.lockedTrackIds.splice(idx, 1)
+
+    this.setTracksToSession()
 
   }
 
   lockTrack(idx: number) {
+
+    this.lockedTracks.push(this.displayTracks[idx])
+    this.displayTracks.splice(idx, 1)
     this.lockedTrackIds.push(this.displayTrackIds[idx])
     this.displayTrackIds.splice(idx, 1)
+
+    this.setTracksToSession()
   }
 
   setUpSelectedArtists() {
@@ -492,6 +506,16 @@ export class UserDashboardComponent implements OnInit {
     reader.onload = (_getEventTarget) => {
       this.imageData = reader.result
     }
+  }
+
+  reloadWindow() {
+    window.location.reload()
+  }
+
+  setTracksToSession() {
+    sessionStorage.setItem('_temp-locked-tracks', JSON.stringify(this.lockedTracks))
+    sessionStorage.setItem('_temp-locked-trackIds', JSON.stringify(this.lockedTrackIds))
+    sessionStorage.setItem('_temp-display-trackIds', JSON.stringify(this.displayTrackIds))
   }
 
 }

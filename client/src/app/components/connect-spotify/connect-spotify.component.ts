@@ -14,6 +14,7 @@ export class ConnectSpotifyComponent implements OnInit {
 
   request!: Request
   param$!: Subscription
+  redirectUrl!: string
 
   username = ''
 
@@ -25,6 +26,11 @@ export class ConnectSpotifyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if (this.activatedRoute.snapshot.queryParams['redirectUrl'] != null) {
+      this.redirectUrl = this.activatedRoute.snapshot.queryParams['redirectUrl']
+      sessionStorage.setItem('redirectUrl', this.redirectUrl)
+    }
 
   }
 
