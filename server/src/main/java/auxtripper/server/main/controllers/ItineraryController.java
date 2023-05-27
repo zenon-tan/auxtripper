@@ -26,7 +26,7 @@ import auxtripper.server.main.services.ItineraryService;
 @RestController
 @RequestMapping(path = "/itinerary/api")
 // @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
-// @CrossOrigin(origins = "https://auxtripper.up.railway.app", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "https://auxtripper.up.railway.app", allowedHeaders = "*", allowCredentials = "true")
 // @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "true")
 public class ItineraryController {
 

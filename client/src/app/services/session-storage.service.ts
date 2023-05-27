@@ -36,6 +36,7 @@ export class SessionStorageService {
 
   clearForNonUser() {
     sessionStorage.clear()
+    localStorage.clear()
   }
 
   clearUserDataForEmail() {
@@ -48,11 +49,7 @@ export class SessionStorageService {
   }
 
   clearForLoginUser() {
-    this.clearTempObjects()
-    // this.clearTripObjects()
-    this.clearSpotifyObjects()
-    this.clearItinerary()
-    this.clearUserDataForEmail()
-    this.clearPlaylistId()
+    sessionStorage.clear()
+    localStorage.clear()
   }
 }

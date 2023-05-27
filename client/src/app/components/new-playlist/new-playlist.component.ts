@@ -7,8 +7,6 @@ import { Observable, map, startWith } from 'rxjs';
 import { SpotifyConstants } from 'src/app/constants/spotify-api.constant';
 import { Router } from '@angular/router';
 import { SpotifyObjectService } from 'src/app/services/spotify-object.service';
-import { AuthStorageService } from 'src/app/services/auth-storage.service';
-import { SaveDataService } from 'src/app/services/save-data.service';
 
 @Component({
   selector: 'app-new-playlist',
@@ -65,16 +63,24 @@ export class NewPlaylistComponent implements OnInit {
       this.router.navigate(['/'])
     }
 
-    this.spotifyUser = {
-      displayName: JSON.parse(sessionStorage.getItem('spotifyUser')!).displayName,
-      email: JSON.parse(sessionStorage.getItem('spotifyUser')!).email,
-      id: JSON.parse(sessionStorage.getItem('spotifyUser')!).id
+    if(JSON.parse(sessionStorage.getItem('spotifyUser')!) != null) {
+      this.spotifyUser = {
+        displayName: JSON.parse(sessionStorage.getItem('spotifyUser')!).displayName,
+        email: JSON.parse(sessionStorage.getItem('spotifyUser')!).email,
+        id: JSON.parse(sessionStorage.getItem('spotifyUser')!).id
+      }
+    } else {
+      this.spotifyGetUserService.getSpotifyCurrentUser().then(
+        (user: any) => {
+          this.spotifyUser = this.spotifyObjectService.convertToUser(user)
+          sessionStorage.setItem('spotifyUser', JSON.stringify(this.spotifyUser))
+        }
+      )
     }
 
     this.getPageData()
     this.spotifyGetUserService.getSpotifyGenreSeeds().then(
       (data: any) => {
-        // console.info(data.genres)
         this.genreSeeds = data.genres as string[]
       }
     )

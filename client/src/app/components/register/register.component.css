@@ -51,3 +51,11 @@ mat-label {
     color: white;
     font-size: small;
 }
+
+.status {
+    color: orangered;
+}
+
+.status p {
+    font-size: small;
+}

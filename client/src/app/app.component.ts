@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthStorageService } from './services/auth-storage.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { SessionStorageService } from './services/session-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router,
     private authStorageService: AuthStorageService,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private sessionStorageService: SessionStorageService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -50,6 +52,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('auth-user')
     this.authService.isLoggedIn = false
     this.isLoggedIn = false
+    this.sessionStorageService.clearForLoginUser()
     this.router.navigate(['/login'])
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { RegisterRequest, AuthenticationRequest } from '../models/authentication-models';
@@ -62,5 +62,17 @@ export class AuthService {
 
   getCurrentUser() {
     return firstValueFrom(this.http.get(UserConstants.GET_CURRENT_USER))
+  }
+
+  checkUsername(username: string) {
+    const params = new HttpParams()
+    .append('username', username)
+    return firstValueFrom(this.http.get(AUTH_API + 'checkUsername', {params}))
+  }
+
+  checkEmail(email: string) {
+    const params = new HttpParams()
+    .append('email', email)
+    return firstValueFrom(this.http.get(AUTH_API + 'checkEmail', {params}))
   }
 }

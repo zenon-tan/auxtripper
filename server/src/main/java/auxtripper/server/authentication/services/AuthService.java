@@ -82,4 +82,12 @@ public class AuthService {
 
     }
 
+    public Boolean checkIfUsername(String username) {
+        return uRepo.checkIfUsername(username);
+    }
+
+    public Boolean checkIfEmail(String email) {
+        return uRepo.checkIfEmail(email);
+    }
+
 }

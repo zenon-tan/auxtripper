@@ -29,6 +29,10 @@ export class AuthSuccessComponent {
 
   ngOnInit(): void {
 
+    if(this.activatedRoute.snapshot.queryParams["error"] != undefined) {
+      this.router.navigate(['/'])
+    }
+
     const code = this.activatedRoute.snapshot.queryParams["code"]
     console.info(code)
 
@@ -44,7 +48,6 @@ export class AuthSuccessComponent {
             (user: any) => {
               this.spotifyUser = this.spotifyObjectService.convertToUser(user)
               sessionStorage.setItem('spotifyUser', JSON.stringify(this.spotifyUser))
-              console.info(this.spotifyUser)
 
               if (this.authStorageService.isLoggedIn()) {
                 this.username = JSON.parse(localStorage.getItem('auth-user')!).username
@@ -62,7 +65,7 @@ export class AuthSuccessComponent {
 
                       this.saveDataService.saveSpotifyUser(saveSpotifyUser).then(
                         (data: any) => {
-                          console.info(data)
+                          console.info('Spotify user saved')
                         }
                       )
                     }

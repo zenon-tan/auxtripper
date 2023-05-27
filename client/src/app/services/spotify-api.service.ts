@@ -9,10 +9,6 @@ import { PlaylistRequest, ModifyPlaylistRequest } from '../models/playlist';
 })
 export class SpotifyGetUserService {
 
-  // headers = new HttpHeaders()
-  //     .set("Content-Type", 'application/json')
-  //     .set('Authorization', 'Bearer ' +  localStorage.getItem('access_token'))
-
   getSpotifyCurrentUser() {
     let headers = new HttpHeaders()
       .set('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
@@ -64,10 +60,6 @@ export class SpotifyGetUserService {
       .set('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
     return firstValueFrom(this.http.get(SpotifyConstants.GENRE_SEEDS_URL, { headers }))
   }
-
-  // getRefreshToken() {
-  //   return firstValueFrom(this.http.get(SpotifyConstants.REFRESH_TOKEN_URL))
-  // }
 
   getUserFollowedArtists() {
     let headers = new HttpHeaders()
@@ -153,8 +145,6 @@ export class SpotifyGetUserService {
     let body: any = {
       uris: songs
     }
-
-    // console.info(body)
 
     return lastValueFrom(this.http.post(SpotifyConstants.ADD_TO_PLAYLIST + '/' + playlist_id + '/tracks',
       JSON.stringify(body), { headers: headers }))
