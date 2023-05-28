@@ -43,7 +43,6 @@ import auxtripper.server.main.services.UserDataService;
 @RestController
 @RequestMapping(path = "/userData/api")
 // @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
-@CrossOrigin(origins = "https://auxtripper.up.railway.app", allowedHeaders = "*", allowCredentials = "true")
 public class UserDataController {
 
     @Autowired
@@ -59,19 +58,12 @@ public class UserDataController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<String> saveUserData(@RequestBody UserData userData) {
-
-        // System.out.println(userData.toString());
-        // userDataService.saveUserData(userData);
-
         return ResponseEntity.ok("default");
     }
 
     @PostMapping(path = "/saveSpotifyUser")
     public ResponseEntity<String> saveUserData(@RequestBody SaveSpotifyUserRequest spotifyUser) {
-
         userDataService.ifUserHasSpotifyUser(spotifyUser.getUsername());
-
-        // System.out.println(spotifyUser);
         SpotifyUser user = spotifyUser.getSpotifyUser();
         userDataService.saveSpotifyUser(user, spotifyUser.getRefreshToken(), spotifyUser.getUsername());
 
@@ -84,11 +76,9 @@ public class UserDataController {
         Optional<SpotifyUser> result = userDataService.getSpotifyUserByUsername(username);
 
         if(result.isPresent()) {
-            // System.out.println("Spotify user exists");
             return ResponseEntity.ok("true");
         }
 
-        // System.out.println("spotify user does not exist");
         return ResponseEntity.ok("false");
     }
 
@@ -101,28 +91,22 @@ public class UserDataController {
 
     @PostMapping(path = "/updateRefreshToken")
     public Boolean updateRefreshToken(@RequestBody RefreshToken refreshToken) {
-        // System.out.println("Update Token HEREEEEEE");
-        // System.out.println(refreshToken);
         return userDataService.updateRefreshToken(refreshToken.getRefreshToken(), refreshToken.getUsername());
     }
 
     @GetMapping(path = "/userEmail")
     public ResponseEntity<String> getEmailByUser(@RequestParam String username) {
-
         UserDataEmailRequest data = userDataService.getEmailAndNameByUsername(username);
-
         return ResponseEntity.ok(Json.createObjectBuilder().add("email", data.getEmail()).add("firstName", data.getFirstName()).build().toString());
 
     }
 
     @Autowired
     private Scheduler scheduler;
-
     private static final Logger logger = LoggerFactory.getLogger(EmailJobScheduleController.class);
 
     @PostMapping("/scheduleEmail")
     public ResponseEntity<ScheduleEmailResponse> scheduleEmail(@Valid @RequestBody ScheduleEmailRequest scheduleEmailRequest) {
-        // System.out.println(scheduleEmailRequest);
         try {
             ZonedDateTime dateTime = ZonedDateTime.of(scheduleEmailRequest.getDateTime(), scheduleEmailRequest.getTimeZone());
             if(dateTime.isBefore(ZonedDateTime.now())) {

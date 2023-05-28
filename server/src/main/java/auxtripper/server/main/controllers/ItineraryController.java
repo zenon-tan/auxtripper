@@ -26,8 +26,6 @@ import auxtripper.server.main.services.ItineraryService;
 @RestController
 @RequestMapping(path = "/itinerary/api")
 // @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
-@CrossOrigin(origins = "https://auxtripper.up.railway.app", allowedHeaders = "*", allowCredentials = "true")
-// @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "true")
 public class ItineraryController {
 
     @Autowired
@@ -35,17 +33,14 @@ public class ItineraryController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<String> saveItinerary(@RequestBody Itinerary itinerary) {
-        // System.out.println(itinerary);
         itinerary.setId(UUID.randomUUID().toString().substring(0, 8));
         itineraryService.saveData(itinerary);
         JsonObject response = Json.createObjectBuilder().add("id", itinerary.getId()).build();
-
         return ResponseEntity.ok(response.toString());
     }
 
     @GetMapping(path = "/all")
     public List<Itinerary> getAllItinerariesByUser(@RequestParam(name = "username") String username) {
-        // System.out.println(username);
         Optional<List<Itinerary>> result = itineraryService.getAllItineraries(username);
         if(result.isPresent()) {
             return result.get();
@@ -65,7 +60,6 @@ public class ItineraryController {
 
     @PostMapping(path = "/modifyPlaylist")
     public void modifyPlaylist(@RequestBody ModifyPlaylistRequest modifyPlaylistRequest) throws ParseException, IOException {
-        // System.out.println(modifyPlaylistRequest);
         itineraryService.modifyPlaylist(modifyPlaylistRequest);
     }
 
@@ -74,5 +68,4 @@ public class ItineraryController {
         itineraryService.deleteItineraryById(itineraryId);
     }
 
-    
 }

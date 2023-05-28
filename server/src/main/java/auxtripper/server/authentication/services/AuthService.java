@@ -79,7 +79,6 @@ public class AuthService {
 
     public String getCurrentUser() {
         return ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-
     }
 
     public Boolean checkIfUsername(String username) {

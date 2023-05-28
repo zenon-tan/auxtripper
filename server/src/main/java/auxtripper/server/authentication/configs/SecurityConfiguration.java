@@ -32,7 +32,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers(
                     "/**", "/api/auth/**", "/spotify/api/**"
-                        
                 )
                 .permitAll()
                 .requestMatchers(

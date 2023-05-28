@@ -38,7 +38,6 @@ public class AuthConfig {
                     throw new UsernameNotFoundException("User not found");
                 }
             }
-
         };
     }
 
@@ -58,7 +57,6 @@ public class AuthConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-
     }
 
 }
