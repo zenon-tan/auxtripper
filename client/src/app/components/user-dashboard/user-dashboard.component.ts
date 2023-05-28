@@ -458,8 +458,6 @@ export class UserDashboardComponent implements OnInit {
       this.displayTrackIds.splice(idx, 1)
     }
 
-    this.buttonValidity = 'generate'
-
     this.setTracksToSession()
   }
 

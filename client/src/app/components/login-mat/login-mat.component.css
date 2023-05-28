@@ -41,6 +41,10 @@
 
 }
 
+.toRegister {
+    cursor: pointer;
+}
+
 .toRegister button {
     padding-top: 30px;
     color: orange;
