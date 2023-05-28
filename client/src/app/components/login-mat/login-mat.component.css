@@ -41,6 +41,14 @@
 
 }
 
+.others {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .toRegister {
     cursor: pointer;
 }

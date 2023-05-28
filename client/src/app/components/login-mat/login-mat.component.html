@@ -17,17 +17,19 @@
                     <input type="password" matInput formControlName="loginPassword">
                 </mat-form-field>
                 <button type="submit" [disabled]="loginForm.invalid">Log in</button>
-                <div class="toRegister">
-                    <button (click)="toRegister()">
-                        <u>Sign up</u>
-                    </button>
-                </div>
-                <div class="toRegister">
-                    <button (click)="skip()">
-                        <u>Create playlist without login</u>
-                    </button>
-                </div>
             </div>
         </form>
+        <div class="others">
+            <div class="toRegister">
+                <button (click)="toRegister()">
+                    <u>Sign up</u>
+                </button>
+            </div>
+            <div class="toRegister">
+                <button (click)="skip()">
+                    <u>Create playlist without login</u>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
