@@ -1,5 +1,4 @@
-import { Environment } from "../env/environment";
-import { SpotifyVibe, Vibe } from "../models/spotify-models";
+import { SpotifyVibe } from "../models/spotify-models";
 import { UserConstants } from "./user-api.constant";
 
 export class SpotifyConstants {

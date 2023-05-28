@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
        this.username = this.authStorageService.getUser().username
       } else if (this.authStorageService.isLoggedIn()) {
         this.isLoggedIn = true
+        this.username = this.authStorageService.getUser().username
       }
     }) 
   }
