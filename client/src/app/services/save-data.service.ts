@@ -15,7 +15,6 @@ export class SaveDataService {
 
   headers = new HttpHeaders()
     .set("Content-Type", 'application/json')
-    // .set('Access-Control-Allow-Origin', 'http://localhost:4200')
     .set('Access-Control-Allow-Credentials', 'true')
     .set('Access-Control-Allow-Methods', '*')
 

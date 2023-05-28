@@ -196,7 +196,7 @@ export class PlaylistSummaryComponent implements OnInit {
     sessionStorage.setItem('_temp-display-tracks', JSON.stringify(this.displayTracks))
 
     if (this.authStorageService.isLoggedIn()) {
-      // console.info("logged in")
+      console.info("logged in")
       this.openSaveDialog('0ms', '0ms')
     }
     else {

@@ -14,6 +14,9 @@
                     <p>Sign up successful!</p>
                     <p>Please log in</p>
                 </div>
+                <div *ngIf="status === 'duplicate'" class="status">
+                    <p>This spotify account is already linked to another user</p>
+                </div>
                 <mat-form-field appearance="outline" [style.width.px]=250 [style.height.px]=70>
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <mat-label>Username</mat-label>

@@ -50,8 +50,9 @@ export class AuthSuccessComponent {
               sessionStorage.setItem('spotifyUser', JSON.stringify(this.spotifyUser))
 
               if (this.authStorageService.isLoggedIn()) {
+                
                 this.username = JSON.parse(localStorage.getItem('auth-user')!).username
-
+                console.info(this.username)
                 localStorage.setItem('refresh_token', data.refresh_token)
                 this.saveDataService.checkIfSpotifyUserExists(this.username).then(
                   (exists: any) => {
@@ -66,6 +67,14 @@ export class AuthSuccessComponent {
                       this.saveDataService.saveSpotifyUser(saveSpotifyUser).then(
                         (data: any) => {
                           console.info('Spotify user saved')
+                        }
+                      ).catch(
+                        (err) => {
+                          console.info(err)
+                          if(err.status === 500) {
+                            console.info("Spotify account already linked to another user")
+                            this.router.navigate(['/login'], {queryParams: {'status': 'duplicate'}})
+                          }
                         }
                       )
                     }

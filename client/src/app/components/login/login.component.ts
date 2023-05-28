@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   constructor(private fb:FormBuilder, private authService: AuthService,
     private authStorageService: AuthStorageService, private router: Router,
     private activatedRoute: ActivatedRoute,
-    private sessionStorageService: SessionStorageService
     ) {}
 
     ngOnInit(): void {

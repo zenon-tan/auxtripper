@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthStorageService } from 'src/app/services/auth-storage.service';
-
 import { SpotifyAuthService } from 'src/app/services/spotify-auth.service';
 
 @Component({
@@ -18,10 +16,9 @@ export class ConnectSpotifyComponent implements OnInit {
 
   username = ''
 
-  constructor(private router: Router,
+  constructor(
     private activatedRoute: ActivatedRoute,
-    private spotifyAuthService: SpotifyAuthService,
-    private authStorageService: AuthStorageService) {
+    private spotifyAuthService: SpotifyAuthService) {
 
   }
 

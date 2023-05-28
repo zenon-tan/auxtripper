@@ -67,7 +67,6 @@ export class RegisterComponent {
       email: this.fb.control<string>('', [Validators.required, Validators.email]),
       password: this.fb.control<string>('', [Validators.required,  Validators.minLength(8)])
     })
-
   }
 
   onSubmitRegistration() {

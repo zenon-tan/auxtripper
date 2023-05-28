@@ -89,8 +89,6 @@ export class LandingComponent implements OnInit {
 
     this.videoIdx = Math.floor(Math.random() * this.videoIds.length)
 
-    this.sessionStorageService.clearForLoginUser()
-
     this.form = this.fb.group({
       origin: this.fb.control<string>('', [Validators.required]),
       destination: this.fb.control<string>('', [Validators.required]),
