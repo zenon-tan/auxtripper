@@ -49,6 +49,11 @@ export class SessionStorageService {
   }
 
   clearForLoginUser() {
+    this.clearTempObjects()
+    this.clearSpotifyObjects()
+  }
+
+  logout() {
     sessionStorage.clear()
     localStorage.clear()
   }

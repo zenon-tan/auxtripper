@@ -82,7 +82,6 @@ export class MatUserSaveComponent implements OnInit {
   }
 
   goToItinerary() {
-    this.sessionStorageService.clearForLoginUser()
     this.dialogRef.close()
     this.router.navigate(['/dashboard'], { queryParams: { 'id': this.itineraryId } })
   }

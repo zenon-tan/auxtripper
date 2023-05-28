@@ -49,10 +49,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('auth-user')
+    this.sessionStorageService.logout()
     this.authService.isLoggedIn = false
     this.isLoggedIn = false
-    this.sessionStorageService.clearForLoginUser()
     this.router.navigate(['/login'])
   }
 }
