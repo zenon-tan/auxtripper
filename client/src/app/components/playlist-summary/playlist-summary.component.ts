@@ -49,7 +49,6 @@ export class PlaylistSummaryComponent implements OnInit {
   allTracks: Track[] = []
   lockedTracks: Track[] = []
   displayTracks: Track[] = []
-  backupTracks: Track[] = []
   playlistRequest!: PlaylistRequest
   duration = 0
 
@@ -58,6 +57,7 @@ export class PlaylistSummaryComponent implements OnInit {
   img: any
 
   hasTracks!: boolean
+  isLoading!: boolean
 
   tripDuration = ''
   playlistDuration = ''
@@ -132,7 +132,6 @@ export class PlaylistSummaryComponent implements OnInit {
             }
             idx++
           }
-          // console.info(this.relatedArtists)
         }
       )
   }
@@ -157,11 +156,9 @@ export class PlaylistSummaryComponent implements OnInit {
 
     let imgData = ''
 
-    if (this.img != null) {
+    if (this.img !== undefined) {
       imgData = this.img
     }
-
-    // console.info(this.img)
 
     if (title == '') {
       title = 'Playlist for ' + this.tripDisplay.travelDate +
@@ -231,11 +228,12 @@ export class PlaylistSummaryComponent implements OnInit {
   getTracks(selectedVibeIdx?: number) {
     /* Spotify Recommendations only produces 100 tracks per request
     In order to get more than 100 songs, split into several requests */
-
+    this.isLoading = true
+    this.displayTracks = []
+    this.allTracks = []
     let promiseArr = []
     let numArr = []
-    const songNum = Math.floor(this.tripDisplay.duration / 3.5 / 60 * 2)
-    console.info(songNum)
+    const songNum = Math.floor(this.tripDisplay.duration / 3.5 / 60)
     let leftoverNum = 0
 
     if (songNum > 100) {
@@ -247,8 +245,6 @@ export class PlaylistSummaryComponent implements OnInit {
         numArr.push(leftoverNum)
       }
     }
-
-    console.info(numArr)
 
     if (songNum <= 100) {
       numArr.push(songNum)
@@ -268,15 +264,20 @@ export class PlaylistSummaryComponent implements OnInit {
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        if (data[0].status == 'rejected') {
-          this.hasTracks = false
-        }
+        console.info(data)
         for(let songs of data) {
-          this.allTracks.push(...this.spotifyModelService.convertToTracks(data[0].value.tracks))
+          if (songs.status == 'rejected' || songs.value.tracks.length == 0) {
+            this.hasTracks = false
+            this.isLoading = false
+            return
+          } else {
+            this.allTracks.push(...this.spotifyModelService.convertToTracks(songs.value.tracks))
+          }
         }
         if (this.allTracks.length > 0) {
           this.hasTracks = true
-          const middleIndex = Math.ceil(this.allTracks.length / 2);
+          this.isLoading = false
+
           const randomTracks = this.allTracks.sort(() => 0.5 - Math.random())
           if (JSON.parse(sessionStorage.getItem('_temp-locked-tracks')!) != null
             || JSON.parse(sessionStorage.getItem('_temp-display-tracks')!) != null) {
@@ -285,13 +286,12 @@ export class PlaylistSummaryComponent implements OnInit {
             this.displayTracks = JSON.parse(sessionStorage.getItem('_temp-display-tracks')!)
 
             if (this.lockedTracks.length < 0 || this.displayTracks.length < 0) {
-              this.displayTracks = randomTracks.splice(0, middleIndex)
+              this.displayTracks = randomTracks
             }
 
           } else {
-            this.displayTracks = randomTracks.splice(0, middleIndex)
+            this.displayTracks = randomTracks.slice(0, -this.lockedTracks.length - 1)
           }
-          this.backupTracks = randomTracks
           let trackIds: string[] = []
           for (let t of this.displayTracks) {
             trackIds.push(t.trackId)
@@ -301,7 +301,6 @@ export class PlaylistSummaryComponent implements OnInit {
             (data: any) => {
               this.vibe = this.spotifyModelService.calculateAverageFeatures(data.audio_features)
               
-
               if (this.chart !== undefined) {
                 this.chartDisplayService.destoryChart(this.chart)
                 this.chart = this.chartDisplayService.createChart(this.vibe)                
@@ -326,7 +325,6 @@ export class PlaylistSummaryComponent implements OnInit {
               }
 
             }
-
 
           )
         } else {
@@ -358,18 +356,20 @@ export class PlaylistSummaryComponent implements OnInit {
   }
 
   deleteTrack(idx: number) {
-    if (this.backupTracks.length > 0) {
-      this.displayTracks.splice(idx, 1)
-      this.displayTracks.splice(idx, 0, this.backupTracks[0])
-      this.backupTracks.splice(0, 1)
-    }
+    console.info(this.duration)
+    this.displayTracks.splice(idx, 1)
+    this.duration -= this.displayTracks[idx].durationMs
+    this.playlistDuration = this.formatTimeService.formatToDisplayDuration(this.duration / 1000)
+
 
   }
 
   deleteLockedTrack(idx: number) {
     this.lockedTracks.splice(idx, 1)
-    this.displayTracks.splice(idx, 0, this.backupTracks[0])
-    this.backupTracks.splice(0, 1)
+    this.duration -= this.lockedTracks[idx].durationMs
+    this.playlistDuration = this.formatTimeService.formatToDisplayDuration(this.duration / 1000)
+
+
   }
 
   unlockTrack(idx: number) {

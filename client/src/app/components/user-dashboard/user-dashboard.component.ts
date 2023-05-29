@@ -57,8 +57,6 @@ export class UserDashboardComponent implements OnInit {
   lockedTrackIds: string[] = []
   displayTracks: Track[] = []
   displayTrackIds: string[] = []
-  backupTracks: Track[] = []
-  backupTrackIds: string[] = []
   duration = 0
   playlistDuration = ''
   playlistId: string = ''
@@ -66,7 +64,8 @@ export class UserDashboardComponent implements OnInit {
 
   username!: string
 
-  hasTracks = true
+  hasTracks!: Boolean
+  isLoading!: boolean
 
   optionsPanel = false
 
@@ -101,7 +100,7 @@ export class UserDashboardComponent implements OnInit {
     this.saveDataService.getAllUserItineraries(this.authStorageService.getUser().username).then(
       (data: any) => {
         this.username = this.authStorageService.getUser().username
-  
+
         this.itineraries = data as Itinerary[]
 
         this.sortItinerariesByTravelDate()
@@ -184,6 +183,7 @@ export class UserDashboardComponent implements OnInit {
     this.selectedTripIdx = idx
     this.matCardStyle = 'trip-card-selected'
     this.isTripSelected = true
+    this.isModifyTrip = false
     this.selectedTrip = this.sortByDateMap.get(date)![idx]
     const direction = this.selectedTrip.itinerary.direction
     this.convertToMapDialogDirection(direction)
@@ -204,6 +204,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   modifyPlaylist() {
+    console.info(this.selectedTrip.itinerary.playlist.tracks.length)
     this.isModifyTrip = true
     this.oldSongs = this.selectedTrip.itinerary.playlist.tracks
     this.oldSongIds = this.selectedTrip.itinerary.playlist.playlistRequest.songs
@@ -233,15 +234,6 @@ export class UserDashboardComponent implements OnInit {
     this.form.controls['isPublic'].setValue(this.oldIsPublic)
     this.form.controls['isCollaborative'].setValue(this.oldIsCollaborative)
 
-    if (JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!) != null
-      || JSON.parse(sessionStorage.getItem('_temp-display-trackIds')!) != null
-      || JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!) != null) {
-
-      this.lockedTracks = JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!)
-      this.lockedTrackIds = JSON.parse(sessionStorage.getItem('_temp-locked-trackIds')!)
-      this.displayTrackIds = JSON.parse(sessionStorage.getItem('_temp-display-trackIds')!)
-
-    }
   }
 
 
@@ -318,7 +310,7 @@ export class UserDashboardComponent implements OnInit {
     selectedTrackIFrames.push(...this.lockedTrackIds, ...this.displayTrackIds)
 
     for (let t of selectedTrackIFrames) {
-      
+
       if (this.allTracksMap.has(t)) {
         tracks.push(this.allTracksMap.get(t)!)
         trackIds.push('spotify:track:' + this.allTracksMap.get(t)!.trackId)
@@ -344,18 +336,15 @@ export class UserDashboardComponent implements OnInit {
 
     if (this.imageData !== undefined) {
       this.spotifyGetUserService.addImageToPlaylist(this.imageData.split(',')[1], this.playlistId).then(
-        (data:any) => {
+        (data: any) => {
           console.info(data)
         }
       )
     }
     this.saveDataService.modifyPlaylist(modifyPlaylistRequest)
 
-    sessionStorage.removeItem('_temp-locked-tracks')
-    sessionStorage.removeItem('_temp-locked-trackIds')
-    sessionStorage.removeItem('_temp-display-trackIds')
-
     this.isModifyTrip = false
+    sessionStorage.clear()
     this.router.navigateByUrl('/dashboard?id=' + this.selectedTrip.itinerary.id)
     window.location.reload()
   }
@@ -367,15 +356,15 @@ export class UserDashboardComponent implements OnInit {
   getTracks() {
     /* Spotify Recommendations only produces 100 tracks per request
     In order to get more than 100 songs, split into several requests */
-
-    console.info(this.imageData)
-
+    this.isLoading = true
     this.isPlaylistModified = true
+    this.allTracks = []
+    this.allTrackIds = []
     this.displayTracks = []
     this.displayTrackIds = []
     let promiseArr = []
     let numArr = []
-    const songNum = this.selectedTrip.itinerary.playlist.tracks.length * 2
+    const songNum = this.selectedTrip.itinerary.playlist.tracks.length
     let leftoverNum = 0
     if (songNum > 100) {
       leftoverNum = songNum % 100
@@ -386,6 +375,9 @@ export class UserDashboardComponent implements OnInit {
         numArr.push(leftoverNum)
       }
     }
+
+    console.info(songNum)
+    console.info(numArr)
 
     if (songNum <= 100) {
       numArr.push(songNum)
@@ -398,34 +390,36 @@ export class UserDashboardComponent implements OnInit {
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        for(let songs of data) {
-          console.info(songs)
-          this.allTracks.push(...this.spotifyModelService.convertToTracks(data[0].value.tracks))
+        console.info(data)
+        for (let songs of data) {
+          if (songs.status == 'rejected' || songs.value.tracks.length == 0) {
+            this.hasTracks = false
+            this.isLoading = false
+          } else {
+            this.allTracks.push(...this.spotifyModelService.convertToTracks(songs.value.tracks))
+
+          }
         }
         if (this.allTracks.length > 0) {
           this.hasTracks = true
-
+          this.isLoading = false
           this.allTracks = this.spotifyModelService.convertToTracks(data[0].value.tracks)
 
           for (let t of this.allTracks) {
-            if(!this.allTracksMap.has(t.iFrameUrl)) {
+            if (!this.allTracksMap.has(t.iFrameUrl)) {
               this.allTracksMap.set(t.iFrameUrl, t)
             }
           }
 
-          const middleIndex = Math.ceil(this.allTracks.length / 2);
+
           this.allTracks = this.allTracks.sort(() => 0.5 - Math.random())
 
-          this.displayTracks = this.allTracks.splice(0, middleIndex)
+          this.displayTracks = this.allTracks.slice(0, -this.lockedTrackIds.length - 1)
 
           for (let t of this.displayTracks) {
             this.displayTrackIds.push(t.iFrameUrl)
           }
 
-          this.backupTracks = this.allTracks.splice(middleIndex)
-          for (let t of this.backupTracks) {
-            this.backupTrackIds.push(t.iFrameUrl)
-          }
 
           this.setTracksToSession()
 
@@ -454,28 +448,14 @@ export class UserDashboardComponent implements OnInit {
   }
 
   deleteTrack(idx: number) {
-    if (this.backupTrackIds.length > 0) {
-      this.displayTracks.splice(idx, 1)
-      this.displayTracks.splice(idx, 0, this.backupTracks[0])
-      this.backupTracks.splice(0, 1)
-      this.displayTrackIds.splice(idx, 1)
-      this.displayTrackIds.splice(idx, 0, this.backupTrackIds[0])
-      this.backupTrackIds.splice(0, 1)
-    } else {
-      this.displayTracks.splice(idx, 1)
-      this.displayTrackIds.splice(idx, 1)
-    }
-
+    this.displayTracks.splice(idx, 1)
+    this.displayTrackIds.splice(idx, 1)
     this.setTracksToSession()
   }
 
   deleteLockedTrack(idx: number) {
     this.lockedTracks.splice(idx, 1)
-    this.displayTracks.splice(idx, 0, this.backupTracks[0])
     this.lockedTrackIds.splice(idx, 1)
-    this.displayTrackIds.splice(idx, 0, this.backupTracks[0].iFrameUrl)
-    this.backupTracks.splice(0, 1)
-
     this.setTracksToSession()
   }
 
@@ -513,6 +493,12 @@ export class UserDashboardComponent implements OnInit {
       this.imageData = reader.result
     }
     console.info(this.imageData)
+  }
+
+  removeTracksFromSession() {
+    sessionStorage.removeItem('_temp-locked-tracks')
+    sessionStorage.removeItem('_temp-locked-trackIds')
+    sessionStorage.removeItem('_temp-display-trackIds')
   }
 
   reloadWindow() {
