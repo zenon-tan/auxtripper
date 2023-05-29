@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpotifyObjectService } from 'src/app/services/spotify-object.service';
 import { SpotifyGetUserService } from 'src/app/services/spotify-api.service';
 import { ModifyPlaylistRequest } from 'src/app/models/playlist';
+import { SpotifyAuthService } from 'src/app/services/spotify-auth.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -92,6 +93,7 @@ export class UserDashboardComponent implements OnInit {
     private googleRequestService: GoogleRequestService,
     private spotifyModelService: SpotifyObjectService,
     private spotifyGetUserService: SpotifyGetUserService,
+    private spotifyAuthService: SpotifyAuthService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -208,6 +210,27 @@ export class UserDashboardComponent implements OnInit {
     this.isModifyTrip = true
     this.oldSongs = this.selectedTrip.itinerary.playlist.tracks
     this.oldSongIds = this.selectedTrip.itinerary.playlist.playlistRequest.songs
+
+    this.saveDataService.getSpotifyUser(this.username).then(
+      (data: any) => {
+          this.spotifyAuthService.refreshSpotify(data.refreshToken).then(
+              (newData: any) => {
+                  console.info("token refreshed")
+                  localStorage.setItem('access_token', newData.access_token)
+                  localStorage.setItem('refresh_token', newData.refresh_token)
+                  this.saveDataService.updateRefreshToken(this.username, newData.refresh_token).then(
+                      (isSaved: any) => {
+                          if (isSaved == true) {
+                              console.info("token updated in db")
+                          }
+                      }
+                  )
+              }
+          )
+
+
+      }
+  )
 
     for (let t of this.oldSongs) {
       const uri = 'https://open.spotify.com/embed/track/' + t.trackId + '?utm_source=generator&theme=0'
