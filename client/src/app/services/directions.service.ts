@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MapDirectionsRenderer, MapDirectionsService } from '@angular/google-maps';
-import { Observable, map } from 'rxjs';
+import {  MapDirectionsService } from '@angular/google-maps';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

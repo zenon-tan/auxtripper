@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Bound, Distance, Duration, Legs, Line, Routes, Steps, StopTiming, Timing, Transit, Vehicle } from '../models/google-maps-models';
-import { GoogleMap } from '@angular/google-maps';
+import { Distance, Duration, Legs, Line, Routes, Steps, StopTiming, Timing, Transit, Vehicle } from '../models/google-maps-models';
 
 @Injectable({
   providedIn: 'root'

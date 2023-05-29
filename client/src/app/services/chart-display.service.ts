@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Chart, ChartData } from 'chart.js/auto';
-import { SpotifyVibe } from '../models/spotify-models';
+import { Chart } from 'chart.js/auto';
 
 @Injectable({
   providedIn: 'root'

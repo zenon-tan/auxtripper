@@ -2,7 +2,6 @@ import { SpotifyUser } from "./spotify-models";
 
 export interface UserData {
 
-    // userProfile: UserProfile
     spotifyUser: SpotifyUser
 
 }

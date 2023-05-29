@@ -15,7 +15,6 @@ export class SpotifyAuthService {
 
   codeVerifier: string  = ''
 
-
   getSpotifyUserLogin() {
 
     this.codeVerifier = this.pkceCodeService.generateRandomString(128)
@@ -39,7 +38,6 @@ export class SpotifyAuthService {
         });
 
         window.location.href = SpotifyConstants.SPOTIFY_AUTHORIZE + args
-
       }
       )
   }

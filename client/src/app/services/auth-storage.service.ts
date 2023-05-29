@@ -7,7 +7,7 @@ const USER_KEY = 'auth-user'
 })
 export class AuthStorageService {
 
-  constructor() { }
+  constructor() {}
 
   clean() {
     window.sessionStorage.clear()
@@ -23,7 +23,6 @@ export class AuthStorageService {
     if(user) {
       return JSON.parse(user)
     }
-
     return {}
   }
 
@@ -32,7 +31,6 @@ export class AuthStorageService {
     if(user) {
       return true
     }
-
     return false
   }
 

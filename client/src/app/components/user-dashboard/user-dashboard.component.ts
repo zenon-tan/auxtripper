@@ -342,8 +342,12 @@ export class UserDashboardComponent implements OnInit {
     this.spotifyGetUserService.deleteItemsFromPlaylist(modifyPlaylistRequest, this.oldSongIds)
     this.spotifyGetUserService.addItemsToPlaylist(trackIds, this.playlistId)
 
-    if (this.imageData != '') {
-      this.spotifyGetUserService.addImageToPlaylist(this.imageData, this.playlistId)
+    if (this.imageData !== undefined) {
+      this.spotifyGetUserService.addImageToPlaylist(this.imageData.split(',')[1], this.playlistId).then(
+        (data:any) => {
+          console.info(data)
+        }
+      )
     }
     this.saveDataService.modifyPlaylist(modifyPlaylistRequest)
 
@@ -363,6 +367,8 @@ export class UserDashboardComponent implements OnInit {
   getTracks() {
     /* Spotify Recommendations only produces 100 tracks per request
     In order to get more than 100 songs, split into several requests */
+
+    console.info(this.imageData)
 
     this.isPlaylistModified = true
     this.displayTracks = []
@@ -506,6 +512,7 @@ export class UserDashboardComponent implements OnInit {
     reader.onload = (_getEventTarget) => {
       this.imageData = reader.result
     }
+    console.info(this.imageData)
   }
 
   reloadWindow() {

@@ -9,7 +9,6 @@ const AUTH_API = UserConstants.AUTH_API
 
 const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json',
 'Access-Control-Allow-Credentials': 'true'
-// , 'Access-Control-Allow-Origin': 'http://localhost:4200'
 })}
 
 @Injectable({

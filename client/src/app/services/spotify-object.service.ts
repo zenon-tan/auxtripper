@@ -17,15 +17,11 @@ export class SpotifyObjectService {
       email: data.email,
       id: data.id,
     }
-
     return user
   }
 
-
   convertToArtists(data: any): Artist[] {
-
     let artists: Artist[] = []
-
     for (let a of data) {
       let artist: Artist = {
         name: a.name,
@@ -35,31 +31,22 @@ export class SpotifyObjectService {
         uri: a.uri,
         images: this.convertToImages(a.images)
       }
-
       artists.push(artist)
     }
-
     return artists
-
   }
 
   convertToTrackArtists(data: any): TrackArtist[] {
-
     let artists: TrackArtist[] = []
-
     for (let a of data) {
       let artist: TrackArtist = {
         name: a.name,
         href: a.href,
         uri: a.uri,
-
       }
-
       artists.push(artist)
     }
-
     return artists
-
   }
 
   convertToAlbum(data: any): Album {
@@ -69,13 +56,11 @@ export class SpotifyObjectService {
       href: data.externalUrls.href,
       images: this.convertToImages(data.images)
     }
-
     return album
   }
 
   convertToImages(data: any): Image[] {
     let images: Image[] = []
-
     for (let i of data) {
       let img: Image = {
         url: i.url,
@@ -100,7 +85,6 @@ export class SpotifyObjectService {
           t.id + '?utm_source=generator&theme=0',
         artists: this.convertToTrackArtists(t.artists)
       }
-
       tracks.push(track)
     }
     return tracks
@@ -108,25 +92,20 @@ export class SpotifyObjectService {
   }
 
   calculateAverageFeatures(data: any) {
-
     let energy = 0
     let danceability = 0
     let loudness = 0
     let liveness = 0
     let valence = 0
     let duration = 0
-
     for (let t of data) {
-
       energy += t.energy
       danceability += t.danceability
       loudness += t.loudness
       liveness += t.liveness
       valence += t.valence,
         duration += t.duration_ms
-
     }
-
     let vibe: Vibe = {
       name: "Custom",
       energy: energy / data.length,
@@ -136,12 +115,11 @@ export class SpotifyObjectService {
       valence: valence / data.length,
       totalDuration: duration
     }
-
     return vibe
 
   }
 
-  convertToBackendData(spotifyUser: SpotifyUser, artists: Artist[], vibe: Vibe,
+  convertToBackendData(artists: Artist[], vibe: Vibe,
     genres: string[], tracks: Track[], direction: Direction, playlistRequest: PlaylistRequest,
     isCreated: boolean, createdOn: Date, playlistId: string) {
 
@@ -169,7 +147,6 @@ export class SpotifyObjectService {
 
     let topGenres: Map<string, number> = new Map<string, number>()
 
-
     for (let a of artists) {
       for (let g of a.genres) {
         let genre = g as string
@@ -184,15 +161,10 @@ export class SpotifyObjectService {
     }
 
     let genreList: string[] = []
-
     const sorted = new Map([...topGenres].sort((a, b) => b[1] - a[1]))
     for (let k of sorted.keys()) {
-
       genreList.push(k)
-
     }
-
     return genreList
-
   }
 }

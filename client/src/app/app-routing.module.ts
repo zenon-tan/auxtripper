@@ -14,7 +14,7 @@ import { AuthSuccessComponent } from './components/auth-success/auth-success.com
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent },
+  { path: '', component: LandingComponent, title: 'AuxTripper | Home' },
   { path: 'auth-success', component: AuthSuccessComponent },
   { path: 'trip', component: NewTripComponent, title: 'AuxTripper | New Trip' },
   { path: 'connect-spotify', component: ConnectSpotifyComponent, title: 'AuxTripper | Connect to Spotify' },

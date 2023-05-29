@@ -25,6 +25,7 @@
     width: 200px;
     border-radius: 10000px;
     border: none;
+    cursor: pointer;
 }
 
 .login mat-form-field {
