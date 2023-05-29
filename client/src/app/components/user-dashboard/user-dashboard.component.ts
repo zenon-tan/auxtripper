@@ -76,6 +76,7 @@ export class UserDashboardComponent implements OnInit {
   oldIsPublic!: boolean
   oldIsCollaborative!: boolean
   imageData!: any
+  newImageData!: any
 
   selectedTrip!: DashboardModel
   selectedTripIdx!: number
@@ -204,7 +205,6 @@ export class UserDashboardComponent implements OnInit {
   }
 
   modifyPlaylist() {
-    console.info(this.selectedTrip.itinerary.playlist.tracks.length)
     this.isModifyTrip = true
     this.oldSongs = this.selectedTrip.itinerary.playlist.tracks
     this.oldSongIds = this.selectedTrip.itinerary.playlist.playlistRequest.songs
@@ -216,12 +216,8 @@ export class UserDashboardComponent implements OnInit {
       this.allTracksMap.set(uri, t)
     }
 
-    this.artists = this.selectedTrip.itinerary.playlist.artists
-    this.setUpSelectedArtists()
 
     this.dbplaylistId = this.selectedTrip.itinerary.playlist.playlistRequest.id
-
-    this.selectedGenres = this.selectedTrip.itinerary.playlist.genres
     this.imageData = this.selectedTrip.itinerary.playlist.playlistRequest.imageData
 
     this.oldPlaylistTitle = this.selectedTrip.itinerary.playlist.playlistRequest.title
@@ -326,7 +322,7 @@ export class UserDashboardComponent implements OnInit {
       description: description,
       songs: trackIds,
       tracks: tracks,
-      imageData: this.imageData
+      imageData: this.newImageData
 
     }
 
@@ -334,10 +330,9 @@ export class UserDashboardComponent implements OnInit {
     this.spotifyGetUserService.deleteItemsFromPlaylist(modifyPlaylistRequest, this.oldSongIds)
     this.spotifyGetUserService.addItemsToPlaylist(trackIds, this.playlistId)
 
-    if (this.imageData !== undefined) {
+    if (this.newImageData !== undefined) {
       this.spotifyGetUserService.addImageToPlaylist(this.imageData.split(',')[1], this.playlistId).then(
         (data: any) => {
-          console.info(data)
         }
       )
     }
@@ -354,8 +349,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   getTracks() {
-    /* Spotify Recommendations only produces 100 tracks per request
-    In order to get more than 100 songs, split into several requests */
+    this.artists = this.selectedTrip.itinerary.playlist.artists
+    this.selectedGenres = this.selectedTrip.itinerary.playlist.genres
+    this.setUpSelectedArtists()
+
     this.isLoading = true
     this.isPlaylistModified = true
     this.allTracks = []
@@ -376,9 +373,6 @@ export class UserDashboardComponent implements OnInit {
       }
     }
 
-    console.info(songNum)
-    console.info(numArr)
-
     if (songNum <= 100) {
       numArr.push(songNum)
     }
@@ -390,11 +384,11 @@ export class UserDashboardComponent implements OnInit {
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        console.info(data)
         for (let songs of data) {
           if (songs.status == 'rejected' || songs.value.tracks.length == 0) {
             this.hasTracks = false
             this.isLoading = false
+            return
           } else {
             this.allTracks.push(...this.spotifyModelService.convertToTracks(songs.value.tracks))
 
@@ -411,15 +405,11 @@ export class UserDashboardComponent implements OnInit {
             }
           }
 
-
-          this.allTracks = this.allTracks.sort(() => 0.5 - Math.random())
-
-          this.displayTracks = this.allTracks.slice(0, -this.lockedTrackIds.length - 1)
+          this.displayTracks = this.allTracks.slice(this.lockedTracks.length)
 
           for (let t of this.displayTracks) {
             this.displayTrackIds.push(t.iFrameUrl)
           }
-
 
           this.setTracksToSession()
 
@@ -429,7 +419,7 @@ export class UserDashboardComponent implements OnInit {
       }
     ).catch(
       (err) => {
-        console.info('error in getting tracks')
+        console.error('error in getting tracks')
         this.hasTracks = false
       }
     )
@@ -437,11 +427,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   shuffleSeeds() {
-    const randNum = Math.floor(Math.random() * 5)
     let shuffledArtist = this.selectedArtistsId.sort(() => 0.5 - Math.random())
     let shuffledGenre = this.selectedGenres.sort(() => 0.5 - Math.random())
-    let selectedA = shuffledArtist.splice(0, randNum)
-    let selectedG = shuffledGenre.splice(0, 5 - randNum)
+    let selectedA = shuffledArtist.splice(0, 3)
+    let selectedG = shuffledGenre.splice(0, 2)
     const seed_artists = selectedA.join(',')
     const seed_genres = selectedG.join(',')
     return ({ seed_artists: seed_artists, seed_genres: seed_genres })
@@ -466,7 +455,6 @@ export class UserDashboardComponent implements OnInit {
     this.lockedTrackIds.splice(idx, 1)
 
     this.setTracksToSession()
-
   }
 
   lockTrack(idx: number) {
@@ -490,9 +478,9 @@ export class UserDashboardComponent implements OnInit {
     var reader = new FileReader()
     reader.readAsDataURL(event.target.files[0])
     reader.onload = (_getEventTarget) => {
-      this.imageData = reader.result
+      this.newImageData = reader.result
+      this.imageData = this.newImageData
     }
-    console.info(this.imageData)
   }
 
   removeTracksFromSession() {

@@ -102,8 +102,8 @@ export class NewPlaylistComponent implements OnInit {
 
     this.form = this.fb.group({
       playlistDuration: this.fb.control<number>(this.direction.duration, [Validators.required]),
-      artists: this.fb.control<string[]>([], [Validators.required, Validators.minLength(1)]),
-      genres: this.fb.control<string[]>([], [Validators.required, Validators.minLength(1)])
+      artists: this.fb.control<string[]>([], [Validators.required, Validators.minLength(5)]),
+      genres: this.fb.control<string[]>([], [Validators.required, Validators.minLength(5)])
     })
 
   }
@@ -113,12 +113,10 @@ export class NewPlaylistComponent implements OnInit {
     this.artists$ = this.spotifyGetUserService.getSpotifyTopArtists(this.selectedTimeRange, 50, 0).pipe(
       map(
         (data: any) => {
-          // console.info(data)
           this.artists = this.spotifyObjectService.convertToArtists(data.items)
           this.topGenres = this.spotifyObjectService.generateTopGenres(this.artists)
           this.spotifyGetUserService.getUserFollowedArtists().then(
             (data: any) => {
-              // console.info(data)
               this.mySavedArtists = []
               this.mySavedArtists = this.spotifyObjectService.convertToArtists(data.artists.items)
               for (let a of this.mySavedArtists) {

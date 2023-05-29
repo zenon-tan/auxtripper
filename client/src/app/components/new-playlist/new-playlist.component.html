@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="generate">
-                    <button type="submit" [disabled]="selectedArtists.length == 0 || selectedGenres.length == 0">
+                    <button type="submit" [disabled]="selectedArtists.length != 5 || selectedGenres.length != 5">
                         <div class="button-content">
                             <mat-icon>fast_forward</mat-icon>
                         </div>

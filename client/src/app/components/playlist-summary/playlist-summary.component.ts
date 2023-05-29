@@ -116,12 +116,10 @@ export class PlaylistSummaryComponent implements OnInit {
 
     this.getTracks()
     this.tripDuration = this.formatTimeService.formatToDisplayDuration(this.tripDisplay.duration)
-    this.setUpSelectedArtists()
 
     this.spotifyGetUserService.getRelatedArtists(this.artists[Math.floor(Math.random() * this.artists.length)].artistId)
       .then(
         (data: any) => {
-          // console.info(data)
           this.relatedArtists = this.spotifyModelService.convertToArtists(data.artists)
           let idx = 0
           for (let t of this.relatedArtists) {
@@ -141,8 +139,8 @@ export class PlaylistSummaryComponent implements OnInit {
     let title = this.form.value['playlistTitle']
     let description = this.form.value['playlistDescription']
     let songs: string[] = []
-    let playlistId = ''
     let tracks: Track[] = []
+    let imgData = ''
 
     for (let t of this.lockedTracks) {
       songs.push(t.uri)
@@ -153,8 +151,6 @@ export class PlaylistSummaryComponent implements OnInit {
       songs.push(t.uri)
       tracks.push(t)
     }
-
-    let imgData = ''
 
     if (this.img !== undefined) {
       imgData = this.img
@@ -228,6 +224,12 @@ export class PlaylistSummaryComponent implements OnInit {
   getTracks(selectedVibeIdx?: number) {
     /* Spotify Recommendations only produces 100 tracks per request
     In order to get more than 100 songs, split into several requests */
+    this.artists = JSON.parse(sessionStorage.getItem('artists')!)
+    this.selectedGenres = JSON.parse(sessionStorage.getItem('genres')!)
+
+    this.setUpSelectedArtists()
+    const seeds = this.shuffleSeeds()
+
     this.isLoading = true
     this.displayTracks = []
     this.allTracks = []
@@ -252,20 +254,18 @@ export class PlaylistSummaryComponent implements OnInit {
 
     if (selectedVibeIdx !== undefined) {
       for (let d of numArr) {
-        const seeds = this.shuffleSeeds()
         promiseArr.push(this.spotifyGetUserService.getRecommendations(seeds.seed_artists, seeds.seed_genres, d, selectedVibeIdx))
       }
     } else {
       for (let d of numArr) {
-        const seeds = this.shuffleSeeds()
         promiseArr.push(this.spotifyGetUserService.getRecommendations(seeds.seed_artists, seeds.seed_genres, d))
       }
     }
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        console.info(data)
-        for(let songs of data) {
+
+        for (let songs of data) {
           if (songs.status == 'rejected' || songs.value.tracks.length == 0) {
             this.hasTracks = false
             this.isLoading = false
@@ -278,32 +278,27 @@ export class PlaylistSummaryComponent implements OnInit {
           this.hasTracks = true
           this.isLoading = false
 
-          const randomTracks = this.allTracks.sort(() => 0.5 - Math.random())
           if (JSON.parse(sessionStorage.getItem('_temp-locked-tracks')!) != null
             || JSON.parse(sessionStorage.getItem('_temp-display-tracks')!) != null) {
 
             this.lockedTracks = JSON.parse(sessionStorage.getItem('_temp-locked-tracks')!)
             this.displayTracks = JSON.parse(sessionStorage.getItem('_temp-display-tracks')!)
 
-            if (this.lockedTracks.length < 0 || this.displayTracks.length < 0) {
-              this.displayTracks = randomTracks
-            }
-
           } else {
-            this.displayTracks = randomTracks.slice(0, -this.lockedTracks.length - 1)
+            this.displayTracks = this.allTracks.slice(this.lockedTracks.length)
           }
           let trackIds: string[] = []
-          for (let t of this.displayTracks) {
-            trackIds.push(t.trackId)
+          for (let t = 0; t < this.displayTracks.length + this.lockedTracks.length; t++) {
+            trackIds.push(this.displayTracks[t].trackId)
           }
           const trackIdString = trackIds.join(',')
           this.spotifyGetUserService.getAudioFeatures(trackIdString).then(
             (data: any) => {
               this.vibe = this.spotifyModelService.calculateAverageFeatures(data.audio_features)
-              
+
               if (this.chart !== undefined) {
                 this.chartDisplayService.destoryChart(this.chart)
-                this.chart = this.chartDisplayService.createChart(this.vibe)                
+                this.chart = this.chartDisplayService.createChart(this.vibe)
               } else {
                 this.chart = this.chartDisplayService.createChart(this.vibe)
               }
@@ -312,28 +307,11 @@ export class PlaylistSummaryComponent implements OnInit {
               this.playlistDuration = this.formatTimeService.formatToDisplayDuration(this.vibe.totalDuration / 1000)
 
             }
-          ).catch(
-            (e) => {
-              this.vibe = {
-                name: 'error',
-                energy: 0,
-                danceability: 0,
-                loudness: 0,
-                liveness: 0,
-                valence: 0,
-                totalDuration: 0
-              }
-
-            }
-
           )
+
         } else {
           this.getTracks()
         }
-      }
-    ).catch(
-      (e) => {
-        console.info(e)
       }
     )
   }
@@ -345,11 +323,10 @@ export class PlaylistSummaryComponent implements OnInit {
   }
 
   shuffleSeeds() {
-    const randNum = Math.floor(Math.random() * 5)
     let shuffledArtist = this.selectedArtistsId.sort(() => 0.5 - Math.random())
     let shuffledGenre = this.selectedGenres.sort(() => 0.5 - Math.random())
-    let selectedA = shuffledArtist.splice(0, randNum)
-    let selectedG = shuffledGenre.splice(0, 5 - randNum)
+    let selectedA = shuffledArtist.splice(0, 3)
+    let selectedG = shuffledGenre.splice(0, 2)
     const seed_artists = selectedA.join(',')
     const seed_genres = selectedG.join(',')
     return ({ seed_artists: seed_artists, seed_genres: seed_genres })
@@ -392,7 +369,6 @@ export class PlaylistSummaryComponent implements OnInit {
 
   onFileSelected(event: any) {
 
-    console.info(event)
     var reader = new FileReader()
     reader.readAsDataURL(event.target.files[0])
 

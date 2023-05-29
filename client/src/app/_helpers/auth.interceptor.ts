@@ -20,7 +20,6 @@ export class HttpRequestInterceptor {
     isTokenRefreshed!: Boolean
 
     redirectUrl!: string
-    // redirectUrlParams!: string
 
     constructor(private authStorageService: AuthStorageService,
         private saveDataService: SaveDataService,
@@ -43,7 +42,7 @@ export class HttpRequestInterceptor {
                 this.redirectUrl = this.router.routerState.snapshot.url
             }
 
-            console.info(this.redirectUrl)
+            // console.info(this.redirectUrl)
             if (JSON.parse(localStorage.getItem('auth-user')!) != undefined) {
                 req = req.clone({
                     withCredentials: true,
@@ -84,7 +83,7 @@ export class HttpRequestInterceptor {
             
                       }),
                     catchError((error: HttpErrorResponse) => {
-                        console.info('error: ' + this.redirectUrl)
+                        // console.info('error: ' + this.redirectUrl)
                         if (error.status === 401) {
                             this.username = this.authStorageService.getUser().username
                       
@@ -94,7 +93,7 @@ export class HttpRequestInterceptor {
                                     if (exists) {
                                         this.saveDataService.getSpotifyUser(this.username).then(
                                             (data: any) => {
-                                                console.info(data)
+                                                // console.info(data)
                                                 this.spotifyAuthService.refreshSpotify(data.refreshToken).then(
                                                     (newData: any) => {
                                                         // console.info(newData)
@@ -127,7 +126,7 @@ export class HttpRequestInterceptor {
             }
         }
         if (req.url.search(spotifyToken) >= 0) {
-            console.info(this.redirectUrl)
+
             if (JSON.parse(localStorage.getItem('auth-user')!) != null) {
                 console.info('spotifyapi')
                 return next.handle(req).pipe(

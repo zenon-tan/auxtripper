@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="(hasTracks || hasTracks == undefined) && !isLoading">
+                <div *ngIf="(hasTracks === true || hasTracks == undefined) && isLoading === false">
                     <div class="spotify-track" *ngFor="let t of displayTracks; let idx = index">
                         <div class="track">
                             <iframe [src]="t.iFrameUrl | safe" width="100%" height="80" frameBorder="0"
@@ -90,7 +90,7 @@
                 <div *ngIf="isLoading" class="error">
                     <div>Loading...</div>
                 </div>
-                <div *ngIf="!hasTracks && !isLoading" class="error">
+                <div *ngIf="hasTracks === false && isLoading === false" class="error">
                     <div>Unable to generate recommendation</div>
                     <div (click)="reloadWindow()">
                         <u>Please try again</u>
