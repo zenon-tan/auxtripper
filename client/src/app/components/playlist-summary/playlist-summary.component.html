@@ -6,7 +6,7 @@
                 <div>
                     <div class="playlist-uploadImg">
                         <input hidden class="playlist-upload" (change)="onFileSelected($event)" #fileInput type="file"
-                            accept="image/*" formControlName="playlistImage">
+                            accept="image/jpeg" formControlName="playlistImage">
                         <div class="file-upload">
 
                             <button type="button" class="upload-btn" (click)="fileInput.click()">

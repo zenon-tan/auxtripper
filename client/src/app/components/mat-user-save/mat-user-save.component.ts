@@ -40,16 +40,14 @@ export class MatUserSaveComponent implements OnInit {
   createdOn!: Date
 
   isEmail!: Boolean
-
   emailEligible!: Boolean
 
-
   constructor(public dialogRef: MatDialogRef<MatUserSaveComponent>,
-    private fb: FormBuilder, private saveDataService: SaveDataService,
+    private fb: FormBuilder, 
+    private saveDataService: SaveDataService,
     private spotifyGetUserService: SpotifyGetUserService,
     private router: Router,
     private sessionStorageService: SessionStorageService,
-    private authService: AuthService,
     private formatTimeService: FormatTimeService) { }
 
   ngOnInit(): void {
@@ -75,7 +73,6 @@ export class MatUserSaveComponent implements OnInit {
 
     this.saveDataService.getUserDetails(this.username).then(
       (data: any) => {
-        // console.info(data)
         sessionStorage.setItem('userData', JSON.stringify(data))
       }
     )
@@ -83,6 +80,8 @@ export class MatUserSaveComponent implements OnInit {
 
   goToItinerary() {
     this.dialogRef.close()
+    this.sessionStorageService.clearTempObjects()
+    this.sessionStorageService.clearSpotifyObjects()
     this.router.navigate(['/dashboard'], { queryParams: { 'id': this.itineraryId } })
   }
 
@@ -91,7 +90,6 @@ export class MatUserSaveComponent implements OnInit {
       (data: any) => {
         this.spotifyGetUserService.createPlaylist(this.playlistRequest).then(
           (data: any) => {
-            // console.info(data)
             const playlistId = data.id
             sessionStorage.setItem('playlistId', playlistId)
 
@@ -104,7 +102,6 @@ export class MatUserSaveComponent implements OnInit {
             }
             let songsArr = []
             let promiseArr = []
-            // console.info(this.playlistRequest.songs)
             if (this.playlistRequest.songs.length > 100) {
 
               songsArr.push(this.playlistRequest.songs.slice(0, 100))
@@ -120,14 +117,12 @@ export class MatUserSaveComponent implements OnInit {
 
             Promise.allSettled(promiseArr).then(
               (data: any) => {
-                // console.info(data)
                 this.itinerary = this.saveDataService.convertToItinerary(this.artists, this.vibe,
                   this.genres, this.tracks, this.direction, this.playlistRequest, true, new Date(), playlistId)
                 sessionStorage.setItem('itinerary', JSON.stringify(this.itinerary))
 
                 this.saveDataService.saveItinerary(this.itinerary).then(
                   (data: any) => {
-                    // console.info(data['id'])
                     this.itineraryId = data['id']
                     this.created = true
                   }
@@ -141,17 +136,11 @@ export class MatUserSaveComponent implements OnInit {
   }
 
   sendEmail(emailRequest: EmailRequest) {
-    this.saveDataService.sendEmail(emailRequest).then(
-      (data: any) => {
-        // console.info(data)
-      }
-    )
+    this.saveDataService.sendEmail(emailRequest)
   }
 
   createEmailBody() {
-
     this.direction = JSON.parse(sessionStorage.getItem('direction')!)
-    // console.info(this.direction)
     const email = JSON.parse(sessionStorage.getItem('userData')!).email
     const firstName = JSON.parse(sessionStorage.getItem('userData')!).firstName
     const playlistId = sessionStorage.getItem('playlistId')!
@@ -178,7 +167,6 @@ export class MatUserSaveComponent implements OnInit {
       dateTime: dateTimeToSend,
       timeZone: timeZone
     }
-
     return emailRequest
   }
 }

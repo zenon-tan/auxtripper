@@ -235,6 +235,7 @@ export class PlaylistSummaryComponent implements OnInit {
     let promiseArr = []
     let numArr = []
     const songNum = Math.floor(this.tripDisplay.duration / 3.5 / 60 * 2)
+    console.info(songNum)
     let leftoverNum = 0
 
     if (songNum > 100) {
@@ -246,6 +247,8 @@ export class PlaylistSummaryComponent implements OnInit {
         numArr.push(leftoverNum)
       }
     }
+
+    console.info(numArr)
 
     if (songNum <= 100) {
       numArr.push(songNum)
@@ -263,19 +266,16 @@ export class PlaylistSummaryComponent implements OnInit {
       }
     }
 
-    // console.info(numArr)
-
     Promise.allSettled(promiseArr).then(
       (data: any) => {
         if (data[0].status == 'rejected') {
           this.hasTracks = false
         }
-        // console.info(data[0].value.tracks)
-        if (data[0].value.tracks.length > 0) {
-          this.hasTracks = true
-
+        for(let songs of data) {
           this.allTracks.push(...this.spotifyModelService.convertToTracks(data[0].value.tracks))
-
+        }
+        if (this.allTracks.length > 0) {
+          this.hasTracks = true
           const middleIndex = Math.ceil(this.allTracks.length / 2);
           const randomTracks = this.allTracks.sort(() => 0.5 - Math.random())
           if (JSON.parse(sessionStorage.getItem('_temp-locked-tracks')!) != null
@@ -297,10 +297,8 @@ export class PlaylistSummaryComponent implements OnInit {
             trackIds.push(t.trackId)
           }
           const trackIdString = trackIds.join(',')
-          // console.info(trackIdString)
           this.spotifyGetUserService.getAudioFeatures(trackIdString).then(
             (data: any) => {
-              // console.info(data)
               this.vibe = this.spotifyModelService.calculateAverageFeatures(data.audio_features)
               
 
@@ -317,7 +315,6 @@ export class PlaylistSummaryComponent implements OnInit {
             }
           ).catch(
             (e) => {
-              // console.info(e)
               this.vibe = {
                 name: 'error',
                 energy: 0,
@@ -328,7 +325,6 @@ export class PlaylistSummaryComponent implements OnInit {
                 totalDuration: 0
               }
 
-              // this.chartDisplayService.createChart(this.vibe)
             }
 
 

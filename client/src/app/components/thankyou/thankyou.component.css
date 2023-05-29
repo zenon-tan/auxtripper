@@ -15,31 +15,23 @@
     align-items: center;
     width: 250px;
     gap: 30px;
-    /* background-color: red; */
     padding: 30px;
 }
 
 .title {
-    /* background-color: green; */
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    padding: 0px 30px;
+    justify-content: center;
+    align-items: end;
     width: 10%;
-}
-
-.title p {
     font-size: 300%;
     color: white;
     text-align: right;
-
-
 }
 
-.title span {
-
+.title .username {
     color: #1DB954;
-
+    text-align: right;
 }
 
 

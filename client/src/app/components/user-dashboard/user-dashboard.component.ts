@@ -392,7 +392,11 @@ export class UserDashboardComponent implements OnInit {
 
     Promise.allSettled(promiseArr).then(
       (data: any) => {
-        if (data[0].value.tracks.length != 0) {
+        for(let songs of data) {
+          console.info(songs)
+          this.allTracks.push(...this.spotifyModelService.convertToTracks(data[0].value.tracks))
+        }
+        if (this.allTracks.length > 0) {
           this.hasTracks = true
 
           this.allTracks = this.spotifyModelService.convertToTracks(data[0].value.tracks)
@@ -405,7 +409,6 @@ export class UserDashboardComponent implements OnInit {
 
           const middleIndex = Math.ceil(this.allTracks.length / 2);
           this.allTracks = this.allTracks.sort(() => 0.5 - Math.random())
-
 
           this.displayTracks = this.allTracks.splice(0, middleIndex)
 
@@ -430,7 +433,6 @@ export class UserDashboardComponent implements OnInit {
         this.hasTracks = false
       }
     )
-
     this.buttonValidity = 'generate'
   }
 

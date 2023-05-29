@@ -104,7 +104,7 @@
                     <div>
                         <div class="playlist-uploadImg">
                             <input hidden class="playlist-upload" (change)="onFileSelected($event)" #fileInput
-                                type="file" accept="image/*" formControlName="playlistImage">
+                                type="file" accept="image/jpeg" formControlName="playlistImage">
                             <div class="file-upload">
                                 <img src="{{imageData}}" alt="">
                                 <button type="button" class="upload-btn" (click)="fileInput.click()">
